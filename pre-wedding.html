@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Express | Film Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Modern Font: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAFAFA; /* Very light grey */
+            color: #171717; /* Neutral 900 */
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Subtle Fade In Animation */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modern Button Styles */
+        .btn-primary {
+            background-color: #171717;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #404040;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #171717;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .video-container iframe,
+        .video-container video,
+        .video-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Custom Selection Color */
+        ::selection {
+            background: #00750a;
+            color: white;
+        }
+        
+        .hidden-video {
+            display: none;
+        }
+        
+        /* Custom Shadows */
+        .clean-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="portfolio.html" class="font-heading font-bold text-xl tracking-tight text-neutral-900 flex items-center gap-2">
+                <div class="w-8 h-8 bg-[#00750a] text-white flex items-center justify-center rounded-lg text-sm">P.</div>
+                Portfolio.
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="flex items-center gap-6">
+                <a href="portfolio.html" class="text-sm font-medium text-slate-500 hover:text-[#00750a] transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Work
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / Title Section -->
+    <section class="pt-40 pb-16 px-6 max-w-4xl mx-auto text-center">
+        <div class="fade-in-up inline-flex items-center gap-2 px-4 py-1.5 bg-[#00750a]/10 border border-[#00750a]/20 rounded-full text-[#00750a] text-xs font-bold tracking-widest uppercase mb-6">
+            Short Film • 2024
+        </div>
+        
+        <h1 class="fade-in-up delay-100 font-heading text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+            Behind The Lens.
+        </h1>
+        
+        <p class="fade-in-up delay-200 text-lg md:text-xl text-slate-500 mb-8 max-w-2xl mx-auto leading-relaxed">
+            A visual exploration of urban isolation and the neon-lit streets of the city. A passion project bridging cinematography and storytelling.
+        </p>
+
+        <div class="fade-in-up delay-300 flex flex-wrap justify-center gap-3">
+            <span class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm font-semibold rounded-lg clean-shadow">Directing</span>
+            <span class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm font-semibold rounded-lg clean-shadow">Color Grading</span>
+            <span class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 text-sm font-semibold rounded-lg clean-shadow">Sound Design</span>
+        </div>
+    </section>
+
+    <!-- Theater Section (The Video Player) -->
+    <section class="px-6 max-w-5xl mx-auto pb-24 fade-in-up delay-300">
+        
+        <!-- Toggle Switch -->
+        <div class="flex justify-center mb-10">
+            <div class="bg-slate-100 p-1 rounded-xl inline-flex border border-slate-200">
+                <button id="btn-trailer" onclick="switchVideo('trailer')" class="px-8 py-2.5 rounded-lg font-bold text-sm transition-all bg-white shadow text-[#00750a]">
+                    Trailer
+                </button>
+                <button id="btn-film" onclick="switchVideo('film')" class="px-8 py-2.5 rounded-lg font-bold text-sm transition-all text-slate-500 hover:text-slate-900">
+                    Full Film
+                </button>
+            </div>
+        </div>
+
+        <!-- Media Container -->
+        <div class="rounded-2xl overflow-hidden bg-neutral-900 relative shadow-xl ring-1 ring-neutral-900/5">
+            
+            <!-- Trailer Player (Default Active) -->
+             <div id="player-trailer" class="video-container">
+                <iframe src="https://www.youtube.com/embed/XIjJvw1e5GQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+            </div>
+
+            <!-- Full Film Player (Hidden Default) -->
+            <div id="player-film" class="video-container hidden-video">
+                <iframe src="https://www.youtube.com/embed/umVHQzLy2aM" title="Full Film Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details Section -->
+    <section class="bg-white border-y border-slate-100 py-24 px-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            
+            <div>
+                <h2 class="font-heading text-3xl font-bold text-slate-900 mb-6 tracking-tight">The Process</h2>
+                <div class="space-y-6 text-slate-500 leading-relaxed text-lg">
+                    <p>
+                        "Behind The Lens" was born out of a desire to experiment with low-light cinematography and aggressive color grading. I wanted to capture the feeling of being the only person awake in a city of millions, focusing on the interplay of practical neon lighting and shadow.
+                    </p>
+                    <p>
+                        With zero budget and just a borrowed mirrorless camera, I spent three weeks shooting between 2 AM and 5 AM to ensure completely empty streets. The real magic happened in post-production, where I handled the entire editing, grading, and sound design pipeline.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <!-- Tool Card -->
+                <div class="p-8 bg-slate-50 border border-slate-100 rounded-3xl clean-shadow">
+                    <h3 class="font-bold text-xl text-slate-900 mb-6 flex items-center gap-3">
+                        <div class="p-2 bg-white rounded-lg border border-slate-200 shadow-sm">
+                            <i data-lucide="wrench" class="w-5 h-5 text-[#00750a]"></i> 
+                        </div>
+                        Production Toolkit
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-slate-600 font-medium">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-[#00750a]"></i> DaVinci Resolve (Color Grading)
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-600 font-medium">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-[#00750a]"></i> Premiere Pro (Non-linear Editing)
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-600 font-medium">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-[#00750a]"></i> Ableton Live (Soundscape Design)
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Award/Stat Card -->
+                <div class="p-8 bg-slate-900 text-white rounded-3xl shadow-xl">
+                    <h3 class="font-bold text-xl mb-4 flex items-center gap-3">
+                        <div class="p-2 bg-white/10 rounded-lg">
+                            <i data-lucide="award" class="w-5 h-5 text-yellow-400"></i>
+                        </div>
+                        Project Results
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Selected for the Local Indie Shorts Fest 2024. This project stands as proof that compelling visual storytelling doesn't require massive budgets—just strong execution, technical proficiency, and dedication to the craft.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editing & Post-Production Showcase -->
+    <section class="py-24 px-6 max-w-5xl mx-auto">
+        <h2 class="font-heading text-3xl font-bold text-slate-900 mb-2 tracking-tight">Post-Production Breakdowns</h2>
+        <p class="text-slate-500 mb-10 text-lg">A closer look at the editing process, color grading, and timeline structure.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Edit Breakdown 1 -->
+            <div class="group overflow-hidden rounded-3xl bg-white border border-slate-100 clean-shadow flex flex-col">
+                <div class="aspect-video w-full relative bg-slate-900 overflow-hidden">
+                    <video src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" controls poster="https://images.unsplash.com/photo-1535016120720-40c746a51214?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></video>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-bold text-xl text-slate-900 mb-3 flex items-center gap-2">
+                        <i data-lucide="palette" class="w-5 h-5 text-[#00750a]"></i> Color Grading (LOG to Rec.709)
+                    </h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">
+                        Before and after comparison showing the transition from flat LOG footage to the final moody, cinematic look using DaVinci Resolve. Emphasizing teal shadows and warm highlights.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Edit Breakdown 2 -->
+            <div class="group overflow-hidden rounded-3xl bg-white border border-slate-100 clean-shadow flex flex-col">
+                <div class="aspect-video w-full relative bg-slate-900 overflow-hidden">
+                    <video src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" controls poster="https://images.unsplash.com/photo-1585501332814-1e5ea4c886b6?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover"></video>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-bold text-xl text-slate-900 mb-3 flex items-center gap-2">
+                        <i data-lucide="scissors" class="w-5 h-5 text-[#00750a]"></i> Timeline Sequence
+                    </h3>
+                    <p class="text-slate-500 leading-relaxed text-sm">
+                        A fast-paced walkthrough of the Premiere Pro timeline, highlighting the pacing, cut choices, audio layering, and dynamic B-roll integration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-24 bg-[#00750a] text-white rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden mt-12 mx-4 md:mx-0">
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="font-heading text-4xl md:text-5xl font-bold mb-6 tracking-tight">Need a dedicated creative <br> on your team?</h2>
+            <p class="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
+                Whether it's web development, UI design, or video production, I'm ready to bring technical skill and creative problem-solving to your next project.
+            </p>
+            
+            <a href="index.html#contact" class="bg-white text-[#00750a] px-10 py-4 rounded-full font-bold text-lg inline-flex items-center gap-3 hover:bg-slate-100 transition-all shadow-xl">
+                <i data-lucide="mail" class="w-5 h-5"></i> Get in touch
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 text-slate-500 py-12 px-6 text-sm border-t border-slate-200">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="font-medium">© <span id="year"></span> Your Name. All rights reserved.</p>
+            <div class="flex gap-6 font-semibold">
+                <a href="#" class="hover:text-[#00750a] transition-colors">LinkedIn</a>
+                <a href="#" class="hover:text-[#00750a] transition-colors">GitHub</a>
+                <a href="#" class="hover:text-[#00750a] transition-colors">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Update Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Video Switching Logic
+        function switchVideo(type) {
+            const btnTrailer = document.getElementById('btn-trailer');
+            const btnFilm = document.getElementById('btn-film');
+            const playerTrailer = document.getElementById('player-trailer');
+            const playerFilm = document.getElementById('player-film');
+
+            const activeClass = "px-8 py-2.5 rounded-lg font-bold text-sm transition-all bg-white shadow text-[#00750a]";
+            const inactiveClass = "px-8 py-2.5 rounded-lg font-bold text-sm transition-all text-slate-500 hover:text-slate-900";
+
+            // Get iframe elements to stop playback when hidden
+            const iframeTrailer = playerTrailer.querySelector('iframe');
+            const iframeFilm = playerFilm.querySelector('iframe');
+
+            if (type === 'trailer') {
+                btnTrailer.className = activeClass;
+                btnFilm.className = inactiveClass;
+                
+                playerTrailer.classList.remove('hidden-video');
+                playerFilm.classList.add('hidden-video');
+                
+                if (iframeFilm) iframeFilm.src = iframeFilm.src; // Resets iframe to pause video
+            } else {
+                btnFilm.className = activeClass;
+                btnTrailer.className = inactiveClass;
+                
+                playerFilm.classList.remove('hidden-video');
+                playerTrailer.classList.add('hidden-video');
+                
+                if (iframeTrailer) iframeTrailer.src = iframeTrailer.src; // Resets iframe to pause video
+            }
+        }
+    </script>
+</body>
+</html>

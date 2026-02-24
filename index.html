@@ -3,276 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Tech-Savvy Virtual Assistant</title>
+    <title>iOS Glass Portfolio | Virtual Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .filter-btn.active {
-            background-color: #00750a;
-            color: white;
-            border-color: #00750a;
+        :root {
+            --ios-bg: #f2f2f7;
+            --ios-blue: #007AFF;
         }
-        .work-item {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Plus Jakarta Sans", sans-serif; 
+            background-color: var(--ios-bg); 
+            color: #1c1c1e;
+            overflow-x: hidden;
         }
-        .clean-shadow {
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+
+        /* Glassmorphism Essentials */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: saturate(180%) blur(25px);
+            -webkit-backdrop-filter: saturate(180%) blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        /* 3D Carousel & Rolodex Basics */
+        .perspective-1500 {
+            perspective: 1500px;
+        }
+        .perspective-2000 {
+            perspective: 2000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .carousel-3d-item {
+            backface-visibility: visible;
         }
         
-        /* File Explorer Window Styles for Admin */
-        .admin-window-header {
-            background: #f1f5f9;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 8px 12px;
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            z-index: 50;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
         }
-        .window-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .nav-left { left: 2rem; }
+        .nav-right { right: 2rem; }
+
+        /* Museum Gallery Wall */
+        .gallery-wrapper {
+            overflow: hidden;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            padding: 2rem 0;
+            cursor: grab;
+            white-space: nowrap;
         }
-        .dot-red { background: #ff5f56; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #27c93f; }
+        .gallery-wrapper:active {
+            cursor: grabbing;
+        }
+        .gallery-track {
+            display: inline-flex;
+            gap: 20px;
+            align-items: center;
+            will-change: transform;
+        }
         
-        .file-icon-bg {
-            background: repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #fafafa 10px, #fafafa 20px);
+        /* Museum Frame Grid Configuration */
+        .museum-block {
+            display: grid;
+            grid-template-columns: repeat(14, 100px);
+            grid-template-rows: repeat(8, 80px);
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .museum-frame {
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            padding: 0.75rem;
+            border-radius: 1.5rem;
+        }
+        
+        .museum-frame:hover {
+            transform: scale(1.15);
+            z-index: 50;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+        }
+        
+        .museum-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .frame-1 { grid-column: span 3; grid-row: span 3; }
+        .frame-2 { grid-column: span 4; grid-row: span 2; }
+        .frame-3 { grid-column: span 3; grid-row: span 3; }
+        .frame-4 { grid-column: span 2; grid-row: span 2; }
+        .frame-5 { grid-column: span 2; grid-row: span 3; }
+        .frame-6 { grid-column: span 3; grid-row: span 2; }
+        .frame-7 { grid-column: span 3; grid-row: span 2; }
+        .frame-centerpiece { grid-column: span 6; grid-row: span 4; }
+        .frame-8 { grid-column: span 3; grid-row: span 3; }
+        .frame-9 { grid-column: span 2; grid-row: span 3; }
+        .frame-10 { grid-column: span 3; grid-row: span 3; }
+        .frame-11 { grid-column: span 3; grid-row: span 2; }
+        .frame-12 { grid-column: span 2; grid-row: span 2; }
+        .frame-13 { grid-column: span 3; grid-row: span 3; }
+        .frame-14 { grid-column: span 3; grid-row: span 2; }
+
+        /* File Drawer Rolodex */
+        #admin {
+            position: relative;
+            height: 300vh;
+        }
+        
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .drawer-card {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 100%;
+            max-width: 56rem;
+            height: max-content;
+            transform-origin: center center;
+            will-change: transform, opacity;
+        }
+
+        .admin-window-header {
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .window-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #FF3B30; }
+        .dot-yellow { background: #FFCC00; }
+        .dot-green { background: #34C759; }
+
+        /* Abstract Background */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 25s infinite ease-in-out alternate;
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(0, 122, 255, 0.35); animation-delay: 0s; }
+        .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(88, 86, 214, 0.25); animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-5%, 10%) scale(1.1); }
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mute-btn {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            transition: all 0.3s;
+        }
+        .mute-btn:hover {
+            background: rgba(0,0,0,0.7);
+            transform: scale(1.1);
         }
     </style>
 </head>
-<body class="bg-[#fafafa] text-slate-900 antialiased">
+<body>
 
-    <!-- Header -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="font-heading font-bold text-xl tracking-tight text-neutral-900 flex items-center gap-2">
-                    <div class="w-8 h-8 bg-neutral-900 text-white flex items-center justify-center rounded-lg text-sm">P.</div>
-                    Portfolio.
-                </a>
-            <div class="hidden md:flex space-x-10 text-sm font-medium text-slate-500">
-                <a href="#home" class="hover:text-indigo-600 transition">Home</a>
-                <a href="#about" class="hover:text-indigo-600 transition">About</a>
-                <a href="#skills" class="hover:text-indigo-600 transition">Expertise</a>
-                <a href="#work" class="hover:text-indigo-600 transition">Showcase</a>
-                <a href="#contact" class="text-indigo-600 font-semibold border-b-2 border-indigo-600 pb-1">Hire Me</a>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-bold text-xl tracking-tight flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center rounded-xl shadow-lg">P.</div>
+                <span>Portfolio</span>
+            </a>
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+                <a href="#about" class="hover:text-[#007AFF] transition-colors">Profile</a>
+                <a href="#videos" class="hover:text-[#007AFF] transition-colors">Films</a>
+                <a href="#graphics" class="hover:text-[#007AFF] transition-colors">Gallery</a>
+                <a href="#admin" class="hover:text-[#007AFF] transition-colors">Files</a>
             </div>
+            <a href="mailto:contact@example.com" class="glass-btn px-6 py-2.5 rounded-full text-sm font-bold text-[#007AFF]">Let's Talk</a>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section id="home" class="min-h-screen flex items-center pt-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-indigo-50 rounded-full">
-                IT Student & Creative Virtual Assistant
-            </span>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8 text-slate-900 tracking-tight leading-[1.1]">
-                Precision in <span class="text-indigo-600">Technology</span>,<br>Passion in <span class="text-indigo-600">Creativity</span>.
-            </h1>
-            <p class="text-lg md:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Blending administrative efficiency with technical IT skills and award-winning creative direction. I help businesses grow by handling the details.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-                <a href="#work" class="w-full sm:w-auto px-10 py-4 bg-slate-900 text-white rounded-full font-semibold hover:bg-indigo-600 transition-all shadow-xl shadow-slate-200">
-                    Explore My Works
-                </a>
-                <a href="#contact" class="w-full sm:w-auto px-10 py-4 border border-slate-200 bg-white text-slate-700 rounded-full font-semibold hover:border-indigo-600 hover:text-indigo-600 transition-all">
-                    Let's Connect
-                </a>
-            </div>
+    <section class="min-h-[90vh] flex flex-col items-center justify-center pt-32 px-6 text-center reveal">
+        <div class="glass-panel px-6 py-2 rounded-full mb-8 inline-flex items-center gap-2 shadow-sm">
+            <div class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></div>
+            <span class="text-xs font-bold uppercase tracking-widest text-slate-600">Available for Hire</span>
         </div>
+        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-8 leading-[1.05]">
+            Vision meets <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#007AFF] to-[#5856D6]">Execution.</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-600 max-w-2xl mb-12 leading-relaxed font-medium">
+            A comprehensive showcase spanning cinematic video production, striking graphic design, and meticulous administrative organization.
+        </p>
+        <a href="#about" class="w-14 h-14 glass-btn rounded-full flex items-center justify-center text-slate-400 hover:text-[#007AFF] transition-colors animate-bounce">
+            <i data-lucide="arrow-down"></i>
+        </a>
     </section>
 
-    
-    <!-- Work Showcase -->
-    <section id="work" class="py-32 px-6 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-                <div>
-                    <h2 class="text-3xl font-bold mb-4 tracking-tight">Selected Works</h2>
-                    <p class="text-slate-500 max-w-md">Proof of my technical and creative capabilities across different domains.</p>
-                </div>
-                <div class="flex flex-wrap gap-2 p-1 bg-slate-50 rounded-full border border-slate-100">
-                    <button class="filter-btn active px-6 py-2 rounded-full text-sm font-semibold transition-all" onclick="filterWork('all')">All</button>
-                    <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all" onclick="filterWork('it')">Technical</button>
-                    <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all" onclick="filterWork('admin')">Admin</button>
-                    <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all" onclick="filterWork('creative')">Creative</button>
-                </div>
-            </div>
-
-            <div id="work-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- IT 1
-                <div class="work-item it bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow group">
-                    <div class="h-56 bg-slate-50 flex items-center justify-center relative">
-                        <svg class="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-indigo-600 font-bold mb-2 block">Technical</span>
-                        <h3 class="text-xl font-bold mb-3">Portfolio Website</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Designed and developed this clean portfolio using HTML, CSS, and Tailwind.</p>
-                        <a href="#" class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 flex items-center gap-2">View Project <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>-->
-
-                <!-- Admin 1 (FILE EXPLORER STYLE) -->
-                <!--<div class="work-item admin bg-white rounded-2xl overflow-hidden border border-slate-200 clean-shadow group">
-                    <div class="admin-window-header">
-                        <div class="window-dot dot-red"></div>
-                        <div class="window-dot dot-yellow"></div>
-                        <div class="window-dot dot-green"></div>
-                        <span class="text-[10px] text-slate-400 ml-2 font-mono uppercase tracking-tighter">Spreadsheet.xlsx</span>
-                    </div>
-                    <div class="h-44 file-icon-bg flex items-center justify-center relative">
-                        Spreadsheet Icon
-                        <div class="w-16 h-20 bg-emerald-50 border-2 border-emerald-100 rounded-lg flex flex-col items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            <span class="text-[8px] font-bold text-emerald-700 mt-1 uppercase">Sheets</span>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold mb-2 block">Spreadsheets</span>
-                        <h3 class="text-xl font-bold mb-3">Data Management</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Automated trackers and financial reporting tools created using Google Sheets & App Script.</p>
-                        <a href="#" class="text-sm font-bold text-emerald-600 flex items-center gap-2">Open File <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>-->
-
-                <!-- Film -->
-                <div class="work-item creative bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow group">
-                    <div class="h-56 bg-slate-50 flex items-center justify-center relative">
-                        <img src="Photos/Thumbnail.png" alt="Film Project Thumbnail" class="w-full h-full object-cover">
-                        <svg class="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                        <div class="absolute top-4 right-4 px-3 py-1 bg-yellow-400 text-slate-900 text-[10px] font-bold rounded-full">AWARD WINNER</div>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-indigo-600 font-bold mb-2 block">Direction</span>
-                        <h3 class="text-xl font-bold mb-3">Short Film Project</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Winning entry for the School Film Festival. Handled directing and editing.</p>
-                        <a href="film.html" class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 flex items-center gap-2">Watch Clip <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>
-
-                <!-- Pre-Wedding -->
-                <div class="work-item creative bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow group">
-                    <div class="h-56 bg-slate-50 flex items-center justify-center relative">
-                        <img src="Photos/Thumbnail PreWed.png" alt="Pre Wedding Thumbnail" class="w-full h-full object-cover">
-                        <svg class="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-indigo-600 font-bold mb-2 block">Pre-Wedding</span>
-                        <h3 class="text-xl font-bold mb-3">Pre-Wedding Shoot</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Captured the couple's journey in a series of intimate and candid moments.</p>
-                        <a href="pre-wedding.html" class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 flex items-center gap-2">View The Story <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>
-
-                <!-- Admin 2 (FILE EXPLORER STYLE) -->
-                <div class="work-item admin bg-white rounded-2xl overflow-hidden border border-slate-200 clean-shadow group">
-                    <div class="admin-window-header">
-                        <div class="window-dot dot-red"></div>
-                        <div class="window-dot dot-yellow"></div>
-                        <div class="window-dot dot-green"></div>
-                        <span class="text-[10px] text-slate-400 ml-2 font-mono uppercase tracking-tighter">Proposal_Final.pdf</span>
-                    </div>
-                    <div class="h-44 file-icon-bg flex items-center justify-center relative">
-                        <!-- Document Icon -->
-                        <div class="w-16 h-20 bg-blue-50 border-2 border-blue-100 rounded-lg flex flex-col items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                            <span class="text-[8px] font-bold text-blue-700 mt-1 uppercase">Docs</span>
-                        </div>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-blue-600 font-bold mb-2 block">Administrative</span>
-                        <h3 class="text-xl font-bold mb-3">Business Documents</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Professional business proposals, meeting minutes, and Google Slide presentations.</p>
-                        <a href="#" class="text-sm font-bold text-blue-600 flex items-center gap-2">Open File <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>
-
-                <!-- Archives -->
-            <div class="video-item vlog bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
-                <div class="admin-window-header">
-                    <div class="window-dot dot-red"></div>
-                    <div class="window-dot dot-yellow"></div>
-                    <div class="window-dot dot-green"></div>
-                    <span class="text-[10px] text-slate-400 ml-2 font-mono uppercase tracking-tighter">Visual Archives</span>
-                </div>
-                <div class="h-44 file-icon-bg flex items-center justify-center relative">
-                    <!-- Document Icon -->
-                    <div class="w-16 h-20 bg-[#00750a]/10 border-2 border-[#00750a]/20 rounded-lg flex flex-col items-center justify-center group-hover:scale-110 transition-transform">
-                        <svg class="w-10 h-10 text-[#00750a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                        <span class="text-[8px] font-bold text-[#00750a] mt-1 uppercase">Vids</span>
-                    </div>
-                </div>
-                <div class="p-8">
-                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Video Edit</span>
-                    <h3 class="text-xl font-bold mb-3">Visual_Archives</h3>
-                    <p class="text-slate-500 text-sm leading-relaxed mb-6">A curated collection of edited video content, including short films, promotional edits, and motion graphics.</p>
-                    <a href="archives.html" class="text-sm font-bold text-[#00750a] flex items-center gap-2">View Archives <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                </div>
-            </div>
-
-                <!-- Creative 2 -->
-                <div class="work-item creative bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow group">
-                    <div class="h-56 bg-slate-50 flex items-center justify-center relative">
-                        <svg class="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-indigo-600 font-bold mb-2 block">Design</span>
-                        <h3 class="text-xl font-bold mb-3">Branding Assets</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Social media templates and posters created using graphic design principles.</p>
-                        <a href="#" class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 flex items-center gap-2">View Gallery <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>
-
-                <!-- IT 2 -->
-                <div class="work-item it bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow group">
-                    <div class="h-56 bg-slate-50 flex items-center justify-center relative">
-                        <svg class="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <div class="p-8">
-                        <span class="text-[10px] uppercase tracking-widest text-indigo-600 font-bold mb-2 block">Logic</span>
-                        <h3 class="text-xl font-bold mb-3">Java Inventory App</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Backend logic implementation for a stock management system.</p>
-                        <a href="#" class="text-sm font-bold text-slate-900 group-hover:text-indigo-600 flex items-center gap-2">GitHub Repo <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="py-32 px-6 bg-white">
-        <div class="max-w-6xl mx-auto">
+    <!-- Profile Section -->
+    <section id="about" class="py-32 px-6">
+        <div class="max-w-6xl mx-auto reveal">
             <div class="grid lg:grid-cols-2 gap-20 items-center">
                 <div class="relative">
-                    <div class="aspect-square bg-slate-100 rounded-2xl overflow-hidden clean-shadow flex items-center justify-center border border-slate-50">
-                        <img src="Photos/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
+                    <div class="aspect-square glass-panel rounded-[2.5rem] overflow-hidden flex items-center justify-center p-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="Profile Picture" class="w-full h-full object-cover rounded-[2rem]">
                     </div>
-                    <div class="absolute -bottom-6 -right-6 p-8 bg-indigo-600 text-white rounded-2xl clean-shadow hidden md:block">
+                    <div class="absolute -bottom-6 -right-6 p-8 bg-[#007AFF]/90 backdrop-blur-xl border border-white/30 text-white rounded-[2rem] shadow-xl hidden md:block">
                         <p class="text-3xl font-bold mb-1">Awarded</p>
-                        <p class="text-sm opacity-80">Best Film Director</p>
+                        <p class="text-sm font-medium opacity-90">Best Film Director</p>
                     </div>
                 </div>
                 <div>
-                    <h2 class="text-3xl font-bold mb-8 tracking-tight">Bridging Academic IT with Real-World Work</h2>
-                    <p class="text-slate-500 text-lg leading-relaxed mb-6">
+                    <h2 class="text-4xl font-bold mb-8 tracking-tight">Bridging Academic IT with Real-World Work</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
                         I am currently studying IT, but I prioritize practical experience. My background is a unique mix of technical logic (HTML, Java, C) and creative storytelling.
                     </p>
-                    <p class="text-slate-500 text-lg leading-relaxed mb-10">
-                        As a <span class="text-indigo-600 font-semibold">Fast Learner</span>, I am ready to be trained in your specific tools. My experience winning a school film festival taught me leadership and how to handle tight deadlines.
+                    <p class="text-slate-600 text-lg leading-relaxed mb-10">
+                        As a <span class="text-[#007AFF] font-semibold">Fast Learner</span>, I am ready to be trained in your specific tools. My experience winning a school film festival taught me leadership and how to handle tight deadlines.
                     </p>
                     
                     <div class="grid grid-cols-2 gap-8">
-                        <div>
-                            <p class="text-2xl font-bold text-slate-900 mb-1">Beginner+</p>
-                            <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Coding Skill</p>
+                        <div class="glass-panel p-6 rounded-2xl">
+                            <p class="text-3xl font-bold text-[#007AFF] mb-1">Beginner+</p>
+                            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Coding Skill</p>
                         </div>
-                        <div>
-                            <p class="text-2xl font-bold text-slate-900 mb-1">Proficient</p>
-                            <p class="text-xs uppercase tracking-widest text-slate-400 font-bold">Admin Tools</p>
+                        <div class="glass-panel p-6 rounded-2xl">
+                            <p class="text-3xl font-bold text-[#007AFF] mb-1">Proficient</p>
+                            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Admin Tools</p>
                         </div>
                     </div>
                 </div>
@@ -280,131 +307,388 @@
         </div>
     </section>
 
-    <!-- Expertise -->
-    <section id="skills" class="py-32 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-3xl font-bold mb-4">Core Expertise</h2>
-                <div class="w-12 h-1 bg-indigo-600 mx-auto rounded-full"></div>
+    <!-- 1. Video Reel Carousel (3D Turning Effect + Infinite Loop) -->
+    <section id="videos" class="py-24 relative overflow-visible group">
+        <div class="max-w-7xl mx-auto px-6 mb-16 reveal relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+            <div>
+                <h2 class="text-4xl font-bold tracking-tight mb-4 flex items-center gap-3">
+                    <i data-lucide="film" class="w-8 h-8 text-[#007AFF]"></i> Motion & Film
+                </h2>
+                <p class="text-lg text-slate-600">Cinematic storytelling and commercial edits. Turning around infinitely.</p>
             </div>
+            <a href="archives.html" class="glass-btn px-6 py-3 rounded-full text-sm font-bold text-[#007AFF] flex items-center gap-2">
+                Open Full Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+        </div>
 
-            <div class="grid md:grid-cols-3 gap-12">
-                <!-- Coding -->
-                <div class="group">
-                    <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-indigo-600 transition-colors">
-                        <svg class="w-6 h-6 text-indigo-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Development</h3>
-                    <p class="text-slate-500 mb-6 text-sm leading-relaxed">Coding with HTML, CSS, JavaScript, Java, and C. Focused on clean logic and learning fast.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Java</span>
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">C</span>
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Web</span>
-                    </div>
-                </div>
+        <div class="relative w-full reveal perspective-1500 h-[400px] md:h-[500px] flex items-center justify-center">
+            <button onclick="rotateCarousel(1)" class="carousel-nav-btn nav-left glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+                <i data-lucide="chevron-left"></i>
+            </button>
+            <button onclick="rotateCarousel(-1)" class="carousel-nav-btn nav-right glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+                <i data-lucide="chevron-right"></i>
+            </button>
 
-                <!-- Admin -->
-                <div class="group">
-                    <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-indigo-600 transition-colors">
-                        <svg class="w-6 h-6 text-indigo-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Administration</h3>
-                    <p class="text-slate-500 mb-6 text-sm leading-relaxed">Expert use of Google Workspace and Microsoft Office for documentation and data management.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Docs</span>
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Sheets</span>
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">VA</span>
-                    </div>
-                </div>
+            <!-- 3D Spinner Container -->
+            <div id="videoSpinner" class="relative w-[75vw] md:w-[45vw] lg:w-[35vw] h-full transform-style-3d transition-transform duration-700 ease-in-out">
+                <!-- Javascript will inject 6 items here to form a perfect cylinder -->
+            </div>
+        </div>
+    </section>
 
-                <!-- Design -->
-                <div class="group">
-                    <div class="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-indigo-600 transition-colors">
-                        <svg class="w-6 h-6 text-indigo-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Creative Direction</h3>
-                    <p class="text-slate-500 mb-6 text-sm leading-relaxed">Graphic design, video editing, and award-winning creative management.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Edit</span>
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Design</span>
-                        <span class="px-3 py-1 bg-white border border-slate-100 rounded text-xs text-slate-600">Direct</span>
-                    </div>
+    <!-- 2. Graphic Design Museum Gallery Wall -->
+    <section id="graphics" class="py-32 relative overflow-hidden group">
+        <div class="max-w-7xl mx-auto px-6 mb-8 reveal flex flex-col md:flex-row justify-between items-start md:items-end gap-6 relative z-10">
+            <div>
+                <h2 class="text-4xl font-bold tracking-tight mb-4 flex items-center gap-3">
+                    <i data-lucide="palette" class="w-8 h-8 text-[#5856D6]"></i> Museum Gallery
+                </h2>
+                <p class="text-lg text-slate-600">A continuous exhibition tailored to visual frame proportions.</p>
+            </div>
+            <a href="archives.html" class="glass-btn px-6 py-3 rounded-full text-sm font-bold text-[#5856D6] flex items-center gap-2">
+                Open Full Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+        </div>
+
+        <button onclick="scrollGallery(-1)" class="carousel-nav-btn nav-left glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+            <i data-lucide="chevron-left"></i>
+        </button>
+        <button onclick="scrollGallery(1)" class="carousel-nav-btn nav-right glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+            <i data-lucide="chevron-right"></i>
+        </button>
+
+        <div class="gallery-wrapper reveal" id="galleryContainer">
+            <div class="gallery-track" id="galleryWall">
+                <!-- Grid Block 1 -->
+                <div class="museum-block">
+                    <div class="museum-frame frame-1 glass-panel"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=400&h=400&q=80"></div>
+                    <div class="museum-frame frame-2 glass-panel"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&h=300&q=80"></div>
+                    <div class="museum-frame frame-3 glass-panel"><img src="https://images.unsplash.com/photo-1558470598-a5dda9640f6b?auto=format&fit=crop&w=400&h=400&q=80"></div>
+                    <div class="museum-frame frame-4 glass-panel"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=300&h=300&q=80"></div>
+                    <div class="museum-frame frame-centerpiece glass-panel"><img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=800&h=600&q=80"></div>
+                    <div class="museum-frame frame-5 glass-panel"><img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=300&h=500&q=80"></div>
+                    <div class="museum-frame frame-6 glass-panel"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80"></div>
+                    <div class="museum-frame frame-7 glass-panel"><img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=400&h=300&q=80"></div>
+                    <div class="museum-frame frame-8 glass-panel"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=400&h=400&q=80"></div>
+                    <div class="museum-frame frame-9 glass-panel"><img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&w=300&h=500&q=80"></div>
+                    <div class="museum-frame frame-10 glass-panel"><img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=400&h=400&q=80"></div>
+                    <div class="museum-frame frame-11 glass-panel"><img src="https://images.unsplash.com/photo-1605106702734-205df224ecce?auto=format&fit=crop&w=400&h=300&q=80"></div>
+                    <div class="museum-frame frame-12 glass-panel"><img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=300&h=300&q=80"></div>
+                    <div class="museum-frame frame-13 glass-panel"><img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=400&h=400&q=80"></div>
+                    <div class="museum-frame frame-14 glass-panel"><img src="https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?auto=format&fit=crop&w=400&h=300&q=80"></div>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <!-- Contact -->
-    <section id="contact" class="py-32 px-6">
-        <div class="max-w-4xl mx-auto text-center bg-indigo-600 rounded-[3rem] p-12 md:p-20 text-white clean-shadow">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Ready for the real world.</h2>
-            <p class="text-lg opacity-80 mb-12 max-w-xl mx-auto leading-relaxed">
-                I am looking for my first professional role where I can grow and contribute. Eager, fast, and ready to be trained.
-            </p>
-            
-            <div class="grid md:grid-cols-2 gap-4 mb-12">
-                <a href="mailto:hello@example.com" class="p-5 bg-white/10 rounded-2xl flex items-center justify-center gap-4 hover:bg-white/20 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span class="font-semibold">Email Me</span>
-                </a>
-                <a href="#" class="p-5 bg-white/10 rounded-2xl flex items-center justify-center gap-4 hover:bg-white/20 transition">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                    <span class="font-semibold">LinkedIn</span>
+    <!-- 3. Administrative Drawer (Rolodex Rotation) -->
+    <section id="admin">
+        <div class="sticky-container perspective-2000">
+            <div class="w-full max-w-7xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 relative z-50">
+                <div>
+                    <h2 class="text-4xl font-bold tracking-tight mb-4 flex items-center gap-3">
+                        <i data-lucide="folder-open" class="w-10 h-10 text-[#FF9500]"></i> File Drawer
+                    </h2>
+                    <p class="text-lg text-slate-600">Scroll to roll through administrative files.</p>
+                </div>
+                <a href="admin.html" class="glass-btn px-6 py-3 rounded-full text-sm font-bold text-[#FF9500] flex items-center gap-2">
+                    Open Full Drawer <i data-lucide="external-link" class="w-4 h-4"></i>
                 </a>
             </div>
 
-            <form class="bg-white p-8 rounded-3xl text-left space-y-4 text-slate-900 shadow-2xl">
-                <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="Your Name" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-4 focus:outline-none focus:border-indigo-600 transition">
-                    <input type="email" placeholder="Your Email" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-4 focus:outline-none focus:border-indigo-600 transition">
+            <!-- Rolodex Container -->
+            <div id="rolodex" class="relative w-full max-w-4xl h-[400px] transform-style-3d px-6">
+                
+                <!-- File Card 1 -->
+                <div class="drawer-card glass-panel rounded-[2rem]">
+                    <div class="admin-window-header rounded-t-[2rem]">
+                        <div class="window-dot dot-red"></div>
+                        <div class="window-dot dot-yellow"></div>
+                        <div class="window-dot dot-green"></div>
+                        <span class="text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
+                            <i data-lucide="sheet" class="w-4 h-4 text-[#34C759]"></i> Q3_Financial_Tracker.xlsx
+                        </span>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center bg-white/40 rounded-b-[2rem]">
+                        <div class="w-20 h-20 shrink-0 glass-panel !bg-[#34C759]/10 border-[#34C759]/20 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="bar-chart-2" class="w-10 h-10 text-[#34C759]"></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Automated Financial Tracker</h3>
+                            <p class="text-slate-600 mb-4 text-sm leading-relaxed">Dynamic VLOOKUPs and automated macros to streamline reporting.</p>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Data Entry</span>
+                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Google Sheets</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <textarea rows="4" placeholder="How can I support your project?" class="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-4 focus:outline-none focus:border-indigo-600 transition"></textarea>
-                <button type="submit" class="w-full py-5 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition">
-                    Send Message
-                </button>
-            </form>
+
+                <!-- File Card 2 -->
+                <div class="drawer-card glass-panel rounded-[2rem]">
+                    <div class="admin-window-header rounded-t-[2rem]">
+                        <div class="window-dot dot-red"></div>
+                        <div class="window-dot dot-yellow"></div>
+                        <div class="window-dot dot-green"></div>
+                        <span class="text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4 text-[#007AFF]"></i> Onboarding_SOP.docx
+                        </span>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center bg-white/50 backdrop-blur-md rounded-b-[2rem]">
+                        <div class="w-20 h-20 shrink-0 glass-panel !bg-[#007AFF]/10 border-[#007AFF]/20 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="clipboard-list" class="w-10 h-10 text-[#007AFF]"></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Standard Operating Procedures</h3>
+                            <p class="text-slate-600 mb-4 text-sm leading-relaxed">Drafted, formatted, and standardized the client onboarding manual.</p>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Documentation</span>
+                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Formatting</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Card 3 -->
+                <div class="drawer-card glass-panel rounded-[2rem]">
+                    <div class="admin-window-header rounded-t-[2rem]">
+                        <div class="window-dot dot-red"></div>
+                        <div class="window-dot dot-yellow"></div>
+                        <div class="window-dot dot-green"></div>
+                        <span class="text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
+                            <i data-lucide="presentation" class="w-4 h-4 text-[#FF9500]"></i> Pitch_Deck_Master.pptx
+                        </span>
+                    </div>
+                    <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center bg-white/60 backdrop-blur-lg rounded-b-[2rem]">
+                        <div class="w-20 h-20 shrink-0 glass-panel !bg-[#FF9500]/10 border-[#FF9500]/20 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="layout-template" class="w-10 h-10 text-[#FF9500]"></i>
+                        </div>
+                        <div class="text-left">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Executive Presentations</h3>
+                            <p class="text-slate-600 mb-4 text-sm leading-relaxed">Synthesized complex datasets into visually appealing slide decks.</p>
+                            <div class="flex gap-2">
+                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Google Slides</span>
+                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Visual Layout</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <footer class="py-16 border-t border-slate-100 text-center">
-        <p class="text-slate-400 text-sm font-medium">© 2024 Your Name. Built with precision and a growth mindset.</p>
-    </footer>
+    <!-- Footer / Contact -->
+    <section id="contact" class="py-32 px-6 border-t border-white/30 relative z-10 text-center">
+        <div class="max-w-2xl mx-auto reveal glass-panel p-12 rounded-[3rem] shadow-2xl">
+            <div class="w-20 h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-8">
+                <i data-lucide="mail" class="w-10 h-10 text-[#007AFF]"></i>
+            </div>
+            <h2 class="text-5xl font-bold mb-6 tracking-tight">Ready to collaborate?</h2>
+            <p class="text-xl text-slate-600 mb-10">Whether it's managing administrative load, designing visual assets, or cutting the perfect video, I am ready to integrate into your workflow.</p>
+            <a href="mailto:contact@example.com" class="inline-flex items-center gap-3 px-10 py-5 bg-[#007AFF] text-white rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1">
+                Send an Email
+            </a>
+            <p class="mt-12 text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
+        </div>
+    </section>
 
     <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+        // Initialize Icons
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Filter functionality
-        function filterWork(category) {
-            const items = document.querySelectorAll('.work-item');
-            const buttons = document.querySelectorAll('.filter-btn');
+        // 1. Reveal Animations
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+        // ----------------------------------------------------
+        // 2. 3D Turning Video Carousel
+        // ----------------------------------------------------
+        const videoData = [
+            { title: "Behind the Lens", type: "Trailer", video: "https://www.youtube.com/embed/LoQxHktbHmg?enablejsapi=1", poster: "Photos/Thumbnail.png", desc: "A Story of friendships and expression of creativity." },
+            { title: "Kiev and Ching", type: "Teaser", video: "https://www.youtube.com/embed/XIjJvw1e5GQ?enablejsapi=1", poster: "Photos/Thumbnail PreWed.png", desc: "Showcasing the love and joy of a couple's journey." },
+            { title: "Communal Ranch", type: "Vlog", video: "https://drive.google.com/file/d/1EgAvlB6Ke4qKkcDqJWzkMSU3lyIp4uF2/preview", poster: "https://images.unsplash.com/photo-1585501332814-1e5ea4c886b6?auto=format&fit=crop&w=800&q=80", desc: "A travel vlog showcasing the beauty of a rural setting." },
+            { title: "Eleventh Hour", type: "Short Film", video: "https://www.youtube.com/embed/l_E4lYtVce4?enablejsapi=1", poster: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=800&q=80", desc: "A short film exploring themes of time and memory." },
+            { title: "Team Mang", type: "Vlog", video: "https://www.youtube.com/embed/4AyiRwuoqhQ?enablejsapi=1", poster: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80", desc: "Event highlight and showcasing a team's collaborative efforts." },
+            { title: "Pre-Wedding", type: "Short Film", video: "https://www.youtube.com/embed/umVHQzLy2aM?enablejsapi=1", poster: "https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?auto=format&fit=crop&w=800&q=80", desc: "A short film capturing the emotions and moments of the couple's journey." }
+        ];
+
+        let currentRotation = 0;
+        const totalVideos = videoData.length;
+        const angleStep = 360 / totalVideos;
+        let carouselRadius = 0;
+        let activeIndex = 0;
+
+        function create3DCarousel() {
+            const spinner = document.getElementById('videoSpinner');
+            spinner.innerHTML = '';
             
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.innerText.toLowerCase() === category || (category === 'all' && btn.innerText === 'All')) {
-                    btn.classList.add('active');
+            // Calculate radius dynamically to fit layout constraints
+            const spinnerWidth = spinner.offsetWidth;
+            carouselRadius = Math.round((spinnerWidth / 2) / Math.tan(Math.PI / totalVideos)) + 40; 
+            
+            videoData.forEach((data, i) => {
+                const angle = i * angleStep;
+                const div = document.createElement('div');
+                div.className = "absolute top-0 left-0 w-full h-full glass-panel rounded-[2.5rem] p-4 flex flex-col group carousel-3d-item transition-all duration-700 ease-out";
+                div.style.transform = `rotateY(${angle}deg) translateZ(${carouselRadius}px)`;
+                
+                div.innerHTML = `
+                    <div class="aspect-video w-full relative rounded-[2rem] overflow-hidden bg-black shadow-inner pointer-events-auto">
+                        <iframe src="${data.video}" title="${data.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none rounded-[2rem]"></iframe>
+                        <div class="absolute top-4 left-4 glass-panel !bg-black/40 text-white px-4 py-1.5 rounded-full text-xs font-bold backdrop-blur-md pointer-events-none">${data.type}</div>
+                    </div>
+                    <div class="p-6 pointer-events-none">
+                        <h3 class="text-2xl font-bold mb-2">${data.title}</h3>
+                        <p class="text-slate-600">${data.desc}</p>
+                    </div>
+                `;
+                spinner.appendChild(div);
+            });
+
+            lucide.createIcons();
+            applyCarouselTransform();
+        }
+
+        function applyCarouselTransform() {
+            const spinner = document.getElementById('videoSpinner');
+            spinner.style.transform = `translateZ(${-carouselRadius}px) rotateY(${currentRotation}deg)`;
+            
+            // Find front index
+            let normalizedIndex = Math.round(-currentRotation / angleStep) % totalVideos;
+            if (normalizedIndex < 0) normalizedIndex += totalVideos;
+            
+            const items = document.querySelectorAll('.carousel-3d-item');
+            items.forEach((item, i) => {
+                if (i === normalizedIndex) {
+                    item.style.opacity = '1';
+                    item.style.filter = 'blur(0px)';
+                    item.style.pointerEvents = 'auto';
+                } else {
+                    item.style.opacity = '0.4';
+                    item.style.filter = 'blur(4px)';
+                    item.style.pointerEvents = 'none';
                 }
             });
 
-            items.forEach(item => {
-                if (category === 'all' || item.classList.contains(category)) {
-                    item.style.display = 'block';
-                    setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0)'; }, 50);
-                } else {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(20px)';
-                    setTimeout(() => { item.style.display = 'none'; }, 400);
+            if (activeIndex !== normalizedIndex) {
+                // Pause previous video by resetting src
+                const prevItem = items[activeIndex];
+                if (prevItem) {
+                    const iframe = prevItem.querySelector('iframe');
+                    if (iframe) iframe.src = iframe.src;
                 }
-            });
+                activeIndex = normalizedIndex;
+            }
         }
+
+        window.rotateCarousel = function(dir) {
+            currentRotation += dir * angleStep;
+            applyCarouselTransform();
+        }
+
+        // Setup Carousel on load & resize
+        create3DCarousel();
+        window.addEventListener('resize', create3DCarousel);
+
+        // ----------------------------------------------------
+        // 3. Auto-scrolling Gallery Wall + Jump Buttons
+        // ----------------------------------------------------
+        const galleryWall = document.getElementById('galleryWall');
+        const originalBlock = document.querySelector('.museum-block');
+        
+        // Clone block to ensure infinite seamless scrolling
+        galleryWall.appendChild(originalBlock.cloneNode(true));
+        galleryWall.appendChild(originalBlock.cloneNode(true));
+
+        let galleryScrollPos = 0;
+        let gallerySpeed = 1;
+        let isGalleryHovered = false;
+        
+        document.getElementById('galleryContainer').addEventListener('mouseenter', () => isGalleryHovered = true);
+        document.getElementById('galleryContainer').addEventListener('mouseleave', () => isGalleryHovered = false);
+
+        function animateGallery() {
+            if (!isGalleryHovered || Math.abs(gallerySpeed) > 1) {
+                galleryScrollPos += gallerySpeed;
+                
+                // Infinite reset condition (when passing the middle clone threshold)
+                const threshold = galleryWall.scrollWidth / 3;
+                if (galleryScrollPos >= threshold) {
+                    galleryScrollPos -= threshold;
+                } else if (galleryScrollPos < 0) {
+                    galleryScrollPos += threshold;
+                }
+                
+                galleryWall.style.transform = `translateX(${-galleryScrollPos}px)`;
+            }
+
+            // Ease back to normal speed if boosted by buttons
+            if (gallerySpeed > 1) gallerySpeed *= 0.95;
+            if (gallerySpeed < -1) gallerySpeed *= 0.95;
+            if (Math.abs(gallerySpeed) < 1.1) gallerySpeed = 1;
+            
+            requestAnimationFrame(animateGallery);
+        }
+        animateGallery();
+
+        window.scrollGallery = function(dir) {
+            gallerySpeed = dir * 25; // Burst of speed for jump effect
+        }
+
+        // ----------------------------------------------------
+        // 4. Admin Drawer Rolodex Scroll Logic
+        // ----------------------------------------------------
+        const adminSection = document.getElementById('admin');
+        const rolodex = document.getElementById('rolodex');
+        const cards = document.querySelectorAll('.drawer-card');
+        const anglePerCard = 35; // Spread angle
+
+        const updateDrawerRolodex = () => {
+            const isMobile = window.innerWidth < 768;
+            const radius = isMobile ? 250 : 350;
+
+            // Position cards in a static arc initially
+            cards.forEach((card, i) => {
+                card.style.transform = `rotateX(${-i * anglePerCard}deg) translateZ(${radius}px)`;
+            });
+
+            // Calculate rotation based on scroll position
+            const rect = adminSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            let progress = 0;
+            if (rect.top <= 0) {
+                // Determine how far down the section we've scrolled
+                progress = Math.max(0, Math.min(1, -rect.top / (rect.height - windowHeight)));
+            }
+
+            const maxRotation = (cards.length - 1) * anglePerCard;
+            const currentRotation = progress * maxRotation;
+            
+            // Rotate the entire container to reveal cards
+            rolodex.style.transform = `rotateX(${currentRotation}deg)`;
+
+            // Fade cards that are rotated away
+            cards.forEach((card, i) => {
+                const cardAngle = (-i * anglePerCard) + currentRotation;
+                const opacity = 1 - Math.min(1, Math.abs(cardAngle) / 60);
+                card.style.opacity = Math.max(0, opacity);
+            });
+        };
+
+        window.addEventListener('scroll', updateDrawerRolodex);
+        window.addEventListener('resize', updateDrawerRolodex);
+        updateDrawerRolodex(); // Initial call
+
     </script>
 </body>
 </html>

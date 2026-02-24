@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrative Portfolio | Virtual Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Plus Jakarta Sans", "Segoe UI", Roboto, sans-serif; 
+            background-color: #f2f2f7; 
+            color: #171717;
+        }
+
+        .font-heading {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Plus Jakarta Sans", sans-serif;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .filter-btn.active {
+            background-color: #007AFF !important;
+            color: white !important;
+            border-color: #007AFF !important;
+        }
+
+        ::selection {
+            background: #007AFF;
+            color: white;
+        }
+
+        /* File Explorer Window Styles */
+        .admin-window-header {
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .window-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #FF3B30; }
+        .dot-yellow { background: #FFCC00; }
+        .dot-green { background: #34C759; }
+        
+        .file-icon-bg {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .admin-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Abstract Background Orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden relative">
+
+    <!-- Abstract Glass Background Orbs -->
+    <div class="bg-orb top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[#007AFF]/30"></div>
+    <div class="bg-orb bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-[#5856D6]/20"></div>
+    <div class="bg-orb top-[30%] right-[20%] w-[40vw] h-[40vw] bg-[#5AC8FA]/20"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="font-heading font-bold text-xl tracking-tight text-slate-900 flex items-center gap-2">
+                <div class="w-8 h-8 bg-[#007AFF] text-white flex items-center justify-center rounded-xl text-sm shadow-md shadow-blue-500/20">P.</div>
+                Portfolio.
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-[#007AFF] transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Work
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-10 px-6 max-w-4xl mx-auto text-center z-10 relative">
+        <div class="fade-in-up inline-flex items-center gap-2 px-5 py-2 mb-6 text-xs font-bold tracking-widest text-[#007AFF] uppercase glass-btn rounded-full">
+            Virtual Assistant • Operations
+        </div>
+        
+        <h1 class="fade-in-up delay-100 font-heading text-5xl md:text-7xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+            Operational Excellence.
+        </h1>
+        
+        <p class="fade-in-up delay-200 text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            A comprehensive overview of administrative capabilities, including data management, document formatting, and organizational workflows.
+        </p>
+    </section>
+
+    <!-- Filter System -->
+    <section class="px-6 max-w-6xl mx-auto pb-10 fade-in-up delay-300 z-10 relative">
+        <div class="flex flex-wrap justify-center gap-2 p-1.5 glass-card rounded-full w-fit mx-auto">
+            <button class="filter-btn active px-6 py-2.5 rounded-full text-sm font-semibold transition-all" onclick="filterAdmin('all')">All</button>
+            <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-white/50" onclick="filterAdmin('spreadsheet')">Spreadsheets</button>
+            <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-white/50" onclick="filterAdmin('document')">Documents</button>
+            <button class="filter-btn px-6 py-2.5 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-white/50" onclick="filterAdmin('presentation')">Presentations</button>
+        </div>
+    </section>
+
+    <!-- Admin Grid -->
+    <section class="px-6 max-w-6xl mx-auto pb-32 fade-in-up delay-300 z-10 relative">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="admin-grid">
+            
+            <!-- Item 1: Spreadsheet -->
+            <div class="admin-item spreadsheet glass-card rounded-[2rem] overflow-hidden group hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col">
+                <div class="admin-window-header">
+                    <div class="window-dot dot-red"></div>
+                    <div class="window-dot dot-yellow"></div>
+                    <div class="window-dot dot-green"></div>
+                    <span class="text-[11px] text-slate-600 font-medium ml-2 uppercase tracking-wider">Financial_Tracker_Q3.xlsx</span>
+                </div>
+                <div class="h-56 bg-white/30 flex items-center justify-center relative border-b border-white/50">
+                    <div class="w-24 h-28 glass-card !bg-[#34C759]/10 border-2 border-[#34C759]/20 rounded-xl flex flex-col items-center justify-center group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-sm">
+                        <i data-lucide="sheet" class="w-10 h-10 text-[#34C759]"></i>
+                        <span class="text-[10px] font-bold text-[#34C759] mt-2 uppercase tracking-wide">Sheets</span>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#007AFF] font-bold mb-2 block">Data Management</span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Automated Financial Tracker</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Developed a comprehensive spreadsheet with pivot tables, VLOOKUP functions, and automated macros to track quarterly expenses and revenue.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Google Sheets</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Data Entry</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Formulas</span>
+                    </div>
+                    <button class="text-sm font-bold text-[#007AFF] flex items-center gap-2 hover:gap-3 transition-all">Preview File <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <!-- Item 2: Document -->
+            <div class="admin-item document glass-card rounded-[2rem] overflow-hidden group hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col">
+                <div class="admin-window-header">
+                    <div class="window-dot dot-red"></div>
+                    <div class="window-dot dot-yellow"></div>
+                    <div class="window-dot dot-green"></div>
+                    <span class="text-[11px] text-slate-600 font-medium ml-2 uppercase tracking-wider">Client_Onboarding_SOP.docx</span>
+                </div>
+                <div class="h-56 bg-white/30 flex items-center justify-center relative border-b border-white/50">
+                    <div class="w-24 h-28 glass-card !bg-[#007AFF]/10 border-2 border-[#007AFF]/20 rounded-xl flex flex-col items-center justify-center group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-sm">
+                        <i data-lucide="file-text" class="w-10 h-10 text-[#007AFF]"></i>
+                        <span class="text-[10px] font-bold text-[#007AFF] mt-2 uppercase tracking-wide">Docs</span>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#007AFF] font-bold mb-2 block">Process Documentation</span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Standard Operating Procedures</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Drafted, formatted, and standardized the client onboarding manual, ensuring strict adherence to brand guidelines and clarity for new hires.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Google Docs</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Formatting</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Copywriting</span>
+                    </div>
+                    <button class="text-sm font-bold text-[#007AFF] flex items-center gap-2 hover:gap-3 transition-all">Preview File <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <!-- Item 3: Presentation -->
+            <div class="admin-item presentation glass-card rounded-[2rem] overflow-hidden group hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col">
+                <div class="admin-window-header">
+                    <div class="window-dot dot-red"></div>
+                    <div class="window-dot dot-yellow"></div>
+                    <div class="window-dot dot-green"></div>
+                    <span class="text-[11px] text-slate-600 font-medium ml-2 uppercase tracking-wider">Q4_Review_Deck.pptx</span>
+                </div>
+                <div class="h-56 bg-white/30 flex items-center justify-center relative border-b border-white/50">
+                    <div class="w-28 h-20 glass-card !bg-[#FF9500]/10 border-2 border-[#FF9500]/20 rounded-xl flex flex-col items-center justify-center group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-sm">
+                        <i data-lucide="presentation" class="w-10 h-10 text-[#FF9500]"></i>
+                        <span class="text-[10px] font-bold text-[#FF9500] mt-1 uppercase tracking-wide">Slides</span>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#007AFF] font-bold mb-2 block">Visual Communication</span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Quarterly Review Presentation</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Synthesized complex datasets into visually appealing slide decks for executive meetings. Applied animations and uniform typography.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Google Slides</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Data Viz</span>
+                    </div>
+                    <button class="text-sm font-bold text-[#007AFF] flex items-center gap-2 hover:gap-3 transition-all">Preview File <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <!-- Item 4: Spreadsheet/Database -->
+            <div class="admin-item spreadsheet glass-card rounded-[2rem] overflow-hidden group hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col">
+                <div class="admin-window-header">
+                    <div class="window-dot dot-red"></div>
+                    <div class="window-dot dot-yellow"></div>
+                    <div class="window-dot dot-green"></div>
+                    <span class="text-[11px] text-slate-600 font-medium ml-2 uppercase tracking-wider">Inventory_Master.csv</span>
+                </div>
+                <div class="h-56 bg-white/30 flex items-center justify-center relative border-b border-white/50">
+                    <div class="w-24 h-28 glass-card !bg-[#34C759]/10 border-2 border-[#34C759]/20 rounded-xl flex flex-col items-center justify-center group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-300 shadow-sm">
+                        <i data-lucide="database" class="w-10 h-10 text-[#34C759]"></i>
+                        <span class="text-[10px] font-bold text-[#34C759] mt-2 uppercase tracking-wide">Data</span>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#007AFF] font-bold mb-2 block">Database Management</span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Inventory Management Setup</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">Cleaned, sorted, and migrated over 5,000 product SKUs into a structured master database to ensure accurate tracking and reporting.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Excel</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Data Cleansing</span>
+                        <span class="px-4 py-1.5 glass-card !bg-white/60 rounded-full text-xs font-semibold text-slate-700">Accuracy</span>
+                    </div>
+                    <button class="text-sm font-bold text-[#007AFF] flex items-center gap-2 hover:gap-3 transition-all">Preview File <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass-nav py-12 px-6 text-sm relative z-10">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="font-medium text-slate-500">© <span id="year"></span> Your Name. Designed with clarity.</p>
+            <div class="flex gap-6 font-semibold">
+                <a href="#" class="text-slate-600 hover:text-[#007AFF] transition-colors">LinkedIn</a>
+                <a href="#" class="text-slate-600 hover:text-[#007AFF] transition-colors">GitHub</a>
+                <a href="#" class="text-slate-600 hover:text-[#007AFF] transition-colors">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function filterAdmin(category) {
+            const items = document.querySelectorAll('.admin-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(`('${category}')`)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                    setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0) scale(1)'; }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px) scale(0.95)';
+                    setTimeout(() => { item.style.display = 'none'; }, 400);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

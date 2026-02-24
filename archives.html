@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Portfolio | Post-Production</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAFAFA;
+            color: #171717;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .clean-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+        }
+
+        ::selection {
+            background: #00750a;
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="font-heading font-bold text-xl tracking-tight text-neutral-900 flex items-center gap-2">
+                <div class="w-8 h-8 bg-[#00750a] text-white flex items-center justify-center rounded-lg text-sm">P.</div>
+                Portfolio.
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="index.html" class="text-sm font-medium text-slate-500 hover:text-[#00750a] transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Work
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-10 px-6 max-w-4xl mx-auto text-center">
+        <div class="fade-in-up inline-flex items-center gap-2 px-4 py-1.5 bg-[#00750a]/10 border border-[#00750a]/20 rounded-full text-[#00750a] text-xs font-bold tracking-widest uppercase mb-6">
+            Video Editing • Post-Production
+        </div>
+        
+        <h1 class="fade-in-up delay-100 font-heading text-5xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+            Visual Archive.
+        </h1>
+        
+        <p class="fade-in-up delay-200 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            A compiled directory of post-production projects, encompassing short films, promotional edits, and motion graphics.
+        </p>
+    </section>
+
+    <!-- Filter System -->
+    <section class="px-6 max-w-6xl mx-auto pb-10 fade-in-up delay-300">
+        <div class="flex flex-wrap justify-center gap-2 p-1 bg-white border border-slate-200 rounded-full w-fit mx-auto clean-shadow">
+            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all bg-[#00750a] text-white" onclick="filterVideos('all')">All</button>
+            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-slate-100" onclick="filterVideos('narrative')">Narrative</button>
+            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-slate-100" onclick="filterVideos('promo')">Promos</button>
+            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-slate-100" onclick="filterVideos('vlog')">Vlogs</button>
+        </div>
+    </section>
+
+    <!-- Video Grid -->
+    <section class="px-6 max-w-6xl mx-auto pb-24 fade-in-up delay-300">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="video-grid">
+            
+            <!-- Video Item 1 -->
+            <div class="video-item narrative bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
+                <div class="aspect-video w-full relative bg-slate-900">
+                    <iframe src="https://drive.google.com/file/d/16W_v6QchTQEBUPSU5PLP0-vyF3L1MVMl/preview" title="Midnight Express" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Narrative Film</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Behind the Lens (Full Film)</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Complete sequence demonstrating pacing, audio leveling, and a stylized teal/orange color grade.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">DaVinci Resolve</span>
+                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">Ableton Live</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Item 2 -->
+            <div class="video-item promo bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
+                <div class="aspect-video w-full relative bg-slate-900">
+                    <iframe src="https://www.youtube.com/embed/XIjJvw1e5GQ" title="Trailer Teaser" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Promo Teaser</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Pre-Wedding Trailer</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">A fast-paced teaser designed for social media. Emphasis on transition effects and beat-syncing.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">Premiere Pro</span>
+                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">After Effects</span>
+                    </div>
+                </div>
+            </div>
+
+            
+
+             <!-- Video Item 3 -->
+            <div class="video-item vlog bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
+                <div class="aspect-video w-full relative bg-slate-900">
+                    <iframe src="https://drive.google.com/file/d/1EgAvlB6Ke4qKkcDqJWzkMSU3lyIp4uF2/preview" title="Travel Vlog" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Travel Vlog</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Cinematic Travel Edit</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Dynamic travel sequence showcasing speed-ramping techniques, stabilized footage, and environmental sound design.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">DaVinci Resolve</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Item 4 -->
+            <div class="video-item vlog bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
+                <div class="aspect-video w-full relative bg-slate-900">
+                    <iframe src="https://www.youtube.com/embed/l_E4lYtVce4" title="Travel Vlog" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+                </div>
+                <div class="p-8">
+                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Narrative Edit</span>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Action Sequence Block</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Exercise in multi-cam editing and maintaining spatial continuity during complex action sequences.</p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">Premiere Pro</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 text-slate-500 py-12 px-6 text-sm border-t border-slate-200">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="font-medium">© <span id="year"></span> Your Name. All rights reserved.</p>
+            <div class="flex gap-6 font-semibold">
+                <a href="#" class="hover:text-[#00750a] transition-colors">LinkedIn</a>
+                <a href="#" class="hover:text-[#00750a] transition-colors">GitHub</a>
+                <a href="#" class="hover:text-[#00750a] transition-colors">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function filterVideos(category) {
+            const items = document.querySelectorAll('.video-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-[#00750a]', 'text-white');
+                btn.classList.add('text-slate-600', 'bg-transparent');
+                
+                if (btn.getAttribute('onclick').includes(category)) {
+                    btn.classList.add('bg-[#00750a]', 'text-white');
+                    btn.classList.remove('text-slate-600', 'bg-transparent');
+                }
+            });
+
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                    setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0)'; }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => { item.style.display = 'none'; }, 300);
+                    
+                    // Stop playing media when hidden
+                    const video = item.querySelector('video');
+                    const iframe = item.querySelector('iframe');
+                    if (video) video.pause();
+                    if (iframe) iframe.src = iframe.src; 
+                }
+            });
+        }
+    </script>
+</body>
+</html>

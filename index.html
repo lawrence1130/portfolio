@@ -19,15 +19,16 @@
             background-color: var(--ios-bg); 
             color: #1c1c1e;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Glassmorphism Essentials */
         .glass-panel {
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: saturate(180%) blur(25px);
             -webkit-backdrop-filter: saturate(180%) blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            will-change: transform, opacity;
         }
 
         .glass-btn {
@@ -36,9 +37,10 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
             text-decoration: none;
+            touch-action: manipulation;
         }
 
         .glass-btn:hover {
@@ -47,36 +49,36 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
-        /* 3D Carousel & Rolodex Basics */
-        .perspective-1500 {
-            perspective: 1500px;
-        }
-        .perspective-2000 {
-            perspective: 2000px;
-        }
-        .transform-style-3d {
-            transform-style: preserve-3d;
-        }
+        .perspective-1500 { perspective: 1500px; }
+        .perspective-2000 { perspective: 2000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
         .carousel-3d-item {
             backface-visibility: visible;
+            will-change: transform, opacity, filter;
         }
         
         .carousel-nav-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            border-radius: 25px;
+            width: 44px;
+            height: 44px;
+            border-radius: 22px;
             z-index: 50;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .nav-left { left: 2rem; }
-        .nav-right { right: 2rem; }
+        @media (min-width: 768px) {
+            .carousel-nav-btn { width: 50px; height: 50px; border-radius: 25px; }
+            .nav-left { left: 2rem; }
+            .nav-right { right: 2rem; }
+        }
+        @media (max-width: 767px) {
+            .nav-left { left: 0.5rem; }
+            .nav-right { right: 0.5rem; }
+        }
 
-        /* Museum Gallery Wall */
         .gallery-wrapper {
             overflow: hidden;
             width: 100vw;
@@ -88,32 +90,41 @@
             padding: 2rem 0;
             cursor: grab;
             white-space: nowrap;
+            touch-action: pan-y;
         }
-        .gallery-wrapper:active {
-            cursor: grabbing;
-        }
+        .gallery-wrapper:active { cursor: grabbing; }
         .gallery-track {
             display: inline-flex;
-            gap: 20px;
+            gap: 10px;
             align-items: center;
             will-change: transform;
         }
         
-        /* Museum Frame Grid Configuration */
         .museum-block {
             display: grid;
-            grid-template-columns: repeat(14, 100px);
-            grid-template-rows: repeat(8, 80px);
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(14, 60px);
+            grid-template-rows: repeat(8, 50px);
+            gap: 10px;
+            padding: 10px;
+        }
+        @media (min-width: 768px) {
+            .museum-block {
+                grid-template-columns: repeat(14, 100px);
+                grid-template-rows: repeat(8, 80px);
+                gap: 20px;
+                padding: 20px;
+            }
         }
         
         .museum-frame {
             position: relative;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 1;
-            padding: 0.75rem;
-            border-radius: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 1rem;
+        }
+        @media (min-width: 768px) {
+            .museum-frame { padding: 0.75rem; border-radius: 1.5rem; }
         }
         
         .museum-frame:hover {
@@ -126,8 +137,12 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 0.75rem;
+            border-radius: 0.5rem;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+            pointer-events: none;
+        }
+        @media (min-width: 768px) {
+            .museum-frame img { border-radius: 0.75rem; }
         }
 
         .frame-1 { grid-column: span 3; grid-row: span 3; }
@@ -146,11 +161,7 @@
         .frame-13 { grid-column: span 3; grid-row: span 3; }
         .frame-14 { grid-column: span 3; grid-row: span 2; }
 
-        /* File Drawer Rolodex */
-        #admin {
-            position: relative;
-            height: 300vh;
-        }
+        #admin { position: relative; height: 300vh; }
         
         .sticky-container {
             position: sticky;
@@ -170,7 +181,7 @@
             left: 0;
             right: 0;
             margin: auto;
-            width: 100%;
+            width: 90%;
             max-width: 56rem;
             height: max-content;
             transform-origin: center center;
@@ -180,17 +191,20 @@
         .admin-window-header {
             background: rgba(255, 255, 255, 0.4);
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 12px 16px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
-        .window-dot { width: 12px; height: 12px; border-radius: 50%; }
+        @media (min-width: 768px) {
+            .admin-window-header { padding: 12px 16px; gap: 8px; }
+        }
+        .window-dot { width: 10px; height: 10px; border-radius: 50%; }
+        @media (min-width: 768px) { .window-dot { width: 12px; height: 12px; } }
         .dot-red { background: #FF3B30; }
         .dot-yellow { background: #FFCC00; }
         .dot-green { background: #34C759; }
 
-        /* Abstract Background */
         .bg-orb {
             position: fixed;
             border-radius: 50%;
@@ -199,6 +213,7 @@
             pointer-events: none;
             opacity: 0.6;
             animation: float 25s infinite ease-in-out alternate;
+            will-change: transform;
         }
         .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(0, 122, 255, 0.35); animation-delay: 0s; }
         .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(88, 86, 214, 0.25); animation-delay: -5s; }
@@ -208,27 +223,25 @@
             100% { transform: translate(-5%, 10%) scale(1.1); }
         }
 
-        /* Scroll Animations */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .mute-btn {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            transition: all 0.3s;
+        /* Iframe interaction fix for mobile swipe */
+        .iframe-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
         }
-        .mute-btn:hover {
-            background: rgba(0,0,0,0.7);
-            transform: scale(1.1);
+        .pointer-events-auto .iframe-overlay {
+            display: none;
         }
     </style>
 </head>
@@ -238,9 +251,9 @@
     <div class="bg-orb orb-2"></div>
 
     <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="font-bold text-xl tracking-tight flex items-center gap-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center rounded-xl shadow-lg">P.</div>
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+            <a href="#" class="font-bold text-lg md:text-xl tracking-tight flex items-center gap-2 md:gap-3">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center rounded-xl shadow-lg text-sm md:text-base">P.</div>
                 <span>Portfolio</span>
             </a>
             <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
@@ -249,57 +262,56 @@
                 <a href="#graphics" class="hover:text-[#007AFF] transition-colors">Gallery</a>
                 <a href="#admin" class="hover:text-[#007AFF] transition-colors">Files</a>
             </div>
-            <a href="mailto:contact@example.com" class="glass-btn px-6 py-2.5 rounded-full text-sm font-bold text-[#007AFF]">Let's Talk</a>
+            <a href="mailto:contact@example.com" class="glass-btn px-4 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-bold text-[#007AFF]">Let's Talk</a>
         </div>
     </nav>
 
-    <section class="min-h-[90vh] flex flex-col items-center justify-center pt-32 px-6 text-center reveal">
-        <div class="glass-panel px-6 py-2 rounded-full mb-8 inline-flex items-center gap-2 shadow-sm">
+    <section class="min-h-[90vh] flex flex-col items-center justify-center pt-24 px-4 md:px-6 text-center reveal">
+        <div class="glass-panel px-4 py-1.5 md:px-6 md:py-2 rounded-full mb-6 md:mb-8 inline-flex items-center gap-2 shadow-sm">
             <div class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></div>
-            <span class="text-xs font-bold uppercase tracking-widest text-slate-600">Available for Hire</span>
+            <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-600">Available for Hire</span>
         </div>
-        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-8 leading-[1.05]">
+        <h1 class="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter mb-6 md:mb-8 leading-[1.1]">
             Vision meets <br>
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#007AFF] to-[#5856D6]">Execution.</span>
         </h1>
-        <p class="text-xl md:text-2xl text-slate-600 max-w-2xl mb-12 leading-relaxed font-medium">
+        <p class="text-base sm:text-xl md:text-2xl text-slate-600 max-w-2xl mb-10 md:mb-12 leading-relaxed font-medium px-2">
             A comprehensive showcase spanning cinematic video production, striking graphic design, and meticulous administrative organization.
         </p>
-        <a href="#about" class="w-14 h-14 glass-btn rounded-full flex items-center justify-center text-slate-400 hover:text-[#007AFF] transition-colors animate-bounce">
+        <a href="#about" class="w-12 h-12 md:w-14 md:h-14 glass-btn rounded-full flex items-center justify-center text-slate-400 hover:text-[#007AFF] transition-colors animate-bounce">
             <i data-lucide="arrow-down"></i>
         </a>
     </section>
 
-    <!-- Profile Section -->
-    <section id="about" class="py-32 px-6">
+    <section id="about" class="py-20 md:py-32 px-4 md:px-6 overflow-hidden">
         <div class="max-w-6xl mx-auto reveal">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="relative">
-                    <div class="aspect-square glass-panel rounded-[2.5rem] overflow-hidden flex items-center justify-center p-3">
-                        <img src="Photos/Profile.png" alt="Profile Picture" class="w-full h-full object-cover rounded-[2rem]">
+            <div class="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
+                <div class="relative max-w-sm mx-auto lg:max-w-none w-full">
+                    <div class="aspect-square glass-panel rounded-[2rem] md:rounded-[2.5rem] overflow-hidden flex items-center justify-center p-2 md:p-3">
+                        <img src="Photos/Profile.png" alt="Profile Picture" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2rem]">
                     </div>
-                    <div class="absolute -bottom-6 -right-6 p-8 bg-[#007AFF]/90 backdrop-blur-xl border border-white/30 text-white rounded-[2rem] shadow-xl hidden md:block">
-                        <p class="text-3xl font-bold mb-1">Awarded</p>
-                        <p class="text-sm font-medium opacity-90">Best Film Director</p>
+                    <div class="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 p-4 md:p-8 bg-[#007AFF]/90 backdrop-blur-xl border border-white/30 text-white rounded-xl md:rounded-[2rem] shadow-xl">
+                        <p class="text-xl md:text-3xl font-bold mb-1">Awarded</p>
+                        <p class="text-xs md:text-sm font-medium opacity-90">Best Film Director</p>
                     </div>
                 </div>
-                <div>
-                    <h2 class="text-4xl font-bold mb-8 tracking-tight">Bridging Academic IT with Real-World Work</h2>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                <div class="text-center lg:text-left mt-8 lg:mt-0">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 md:mb-8 tracking-tight">Bridging Academic IT with Real-World Work</h2>
+                    <p class="text-slate-600 text-base md:text-lg leading-relaxed mb-4 md:mb-6">
                         I am currently studying IT, but I prioritize practical experience. My background is a unique mix of technical logic (HTML, Java, C) and creative storytelling.
                     </p>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-10">
+                    <p class="text-slate-600 text-base md:text-lg leading-relaxed mb-8 md:mb-10">
                         As a <span class="text-[#007AFF] font-semibold">Fast Learner</span>, I am ready to be trained in your specific tools. My experience winning a school film festival taught me leadership and how to handle tight deadlines.
                     </p>
                     
-                    <div class="grid grid-cols-2 gap-8">
-                        <div class="glass-panel p-6 rounded-2xl">
-                            <p class="text-3xl font-bold text-[#007AFF] mb-1">Beginner+</p>
-                            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Coding Skill</p>
+                    <div class="grid grid-cols-2 gap-4 md:gap-8">
+                        <div class="glass-panel p-4 md:p-6 rounded-2xl">
+                            <p class="text-2xl md:text-3xl font-bold text-[#007AFF] mb-1">Beginner+</p>
+                            <p class="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-bold">Coding Skill</p>
                         </div>
-                        <div class="glass-panel p-6 rounded-2xl">
-                            <p class="text-3xl font-bold text-[#007AFF] mb-1">Proficient</p>
-                            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Admin Tools</p>
+                        <div class="glass-panel p-4 md:p-6 rounded-2xl">
+                            <p class="text-2xl md:text-3xl font-bold text-[#007AFF] mb-1">Proficient</p>
+                            <p class="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-bold">Admin Tools</p>
                         </div>
                     </div>
                 </div>
@@ -308,52 +320,52 @@
     </section>
 
     <!-- 1. Video Reel Carousel (3D Turning Effect + Infinite Loop) -->
-    <section id="videos" class="py-24 relative overflow-visible group">
-        <div class="max-w-7xl mx-auto px-6 mb-16 reveal relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <section id="videos" class="py-20 md:py-24 relative overflow-visible group">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 mb-10 md:mb-16 reveal relative z-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left">
             <div>
-                <h2 class="text-4xl font-bold tracking-tight mb-4 flex items-center gap-3">
-                    <i data-lucide="film" class="w-8 h-8 text-[#007AFF]"></i> Motion & Film
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
+                    <i data-lucide="film" class="w-6 h-6 md:w-8 md:h-8 text-[#007AFF]"></i> Motion & Film
                 </h2>
-                <p class="text-lg text-slate-600">Cinematic storytelling and commercial edits. Turning around infinitely.</p>
+                <p class="text-sm md:text-lg text-slate-600">Cinematic storytelling and commercial edits. Swipe or click to turn.</p>
             </div>
-            <a href="archives.html" class="glass-btn px-6 py-3 rounded-full text-sm font-bold text-[#007AFF] flex items-center gap-2">
-                Open Full Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
+            <a href="#" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#007AFF] flex items-center gap-2">
+                Open Full Video Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
         </div>
 
-        <div class="relative w-full reveal perspective-1500 h-[400px] md:h-[500px] flex items-center justify-center">
-            <button onclick="rotateCarousel(1)" class="carousel-nav-btn nav-left glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+        <div class="relative w-full reveal perspective-1500 h-[300px] sm:h-[400px] md:h-[500px] flex items-center justify-center" id="carouselTouchArea">
+            <button onclick="rotateCarousel(1)" class="carousel-nav-btn nav-left glass-btn md:opacity-0 md:group-hover:opacity-100 text-slate-700 hover:text-[#007AFF]">
                 <i data-lucide="chevron-left"></i>
             </button>
-            <button onclick="rotateCarousel(-1)" class="carousel-nav-btn nav-right glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+            <button onclick="rotateCarousel(-1)" class="carousel-nav-btn nav-right glass-btn md:opacity-0 md:group-hover:opacity-100 text-slate-700 hover:text-[#007AFF]">
                 <i data-lucide="chevron-right"></i>
             </button>
 
             <!-- 3D Spinner Container -->
-            <div id="videoSpinner" class="relative w-[75vw] md:w-[45vw] lg:w-[35vw] h-full transform-style-3d transition-transform duration-700 ease-in-out">
-                <!-- Javascript will inject 6 items here to form a perfect cylinder -->
+            <div id="videoSpinner" class="relative w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[35vw] h-full transform-style-3d transition-transform duration-700 ease-in-out">
+                <!-- Javascript will inject items here -->
             </div>
         </div>
     </section>
 
     <!-- 2. Graphic Design Museum Gallery Wall -->
-    <section id="graphics" class="py-32 relative overflow-hidden group">
-        <div class="max-w-7xl mx-auto px-6 mb-8 reveal flex flex-col md:flex-row justify-between items-start md:items-end gap-6 relative z-10">
+    <section id="graphics" class="py-20 md:py-32 relative overflow-hidden group">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 mb-6 md:mb-8 reveal flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-10">
             <div>
-                <h2 class="text-4xl font-bold tracking-tight mb-4 flex items-center gap-3">
-                    <i data-lucide="palette" class="w-8 h-8 text-[#5856D6]"></i> Museum Gallery
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
+                    <i data-lucide="palette" class="w-6 h-6 md:w-8 md:h-8 text-[#5856D6]"></i> Museum Gallery
                 </h2>
-                <p class="text-lg text-slate-600">A continuous exhibition tailored to visual frame proportions.</p>
+                <p class="text-sm md:text-lg text-slate-600">A continuous exhibition tailored to visual frame proportions. Drag to scroll.</p>
             </div>
-            <a href="archives.html" class="glass-btn px-6 py-3 rounded-full text-sm font-bold text-[#5856D6] flex items-center gap-2">
+            <a href="#" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#5856D6] flex items-center gap-2">
                 Open Full Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
         </div>
 
-        <button onclick="scrollGallery(-1)" class="carousel-nav-btn nav-left glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+        <button onclick="scrollGallery(-1)" class="carousel-nav-btn nav-left glass-btn md:opacity-0 md:group-hover:opacity-100 text-slate-700 hover:text-[#007AFF]">
             <i data-lucide="chevron-left"></i>
         </button>
-        <button onclick="scrollGallery(1)" class="carousel-nav-btn nav-right glass-btn opacity-0 group-hover:opacity-100 hidden md:flex text-slate-700 hover:text-[#007AFF]">
+        <button onclick="scrollGallery(1)" class="carousel-nav-btn nav-right glass-btn md:opacity-0 md:group-hover:opacity-100 text-slate-700 hover:text-[#007AFF]">
             <i data-lucide="chevron-right"></i>
         </button>
 
@@ -384,91 +396,91 @@
     <!-- 3. Administrative Drawer (Rolodex Rotation) -->
     <section id="admin">
         <div class="sticky-container perspective-2000">
-            <div class="w-full max-w-7xl mx-auto px-6 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 relative z-50">
+            <div class="w-full max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-50">
                 <div>
-                    <h2 class="text-4xl font-bold tracking-tight mb-4 flex items-center gap-3">
-                        <i data-lucide="folder-open" class="w-10 h-10 text-[#FF9500]"></i> File Drawer
+                    <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
+                        <i data-lucide="folder-open" class="w-6 h-6 md:w-10 md:h-10 text-[#FF9500]"></i> File Drawer
                     </h2>
-                    <p class="text-lg text-slate-600">Scroll to roll through administrative files.</p>
+                    <p class="text-sm md:text-lg text-slate-600">Scroll to roll through administrative files.</p>
                 </div>
-                <a href="admin.html" class="glass-btn px-6 py-3 rounded-full text-sm font-bold text-[#FF9500] flex items-center gap-2">
+                <a href="#" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#FF9500] flex items-center gap-2">
                     Open Full Drawer <i data-lucide="external-link" class="w-4 h-4"></i>
                 </a>
             </div>
 
             <!-- Rolodex Container -->
-            <div id="rolodex" class="relative w-full max-w-4xl h-[400px] transform-style-3d px-6">
+            <div id="rolodex" class="relative w-full max-w-4xl h-[350px] md:h-[400px] transform-style-3d px-4 md:px-6">
                 
                 <!-- File Card 1 -->
-                <div class="drawer-card glass-panel rounded-[2rem]">
-                    <div class="admin-window-header rounded-t-[2rem]">
+                <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
+                    <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
                         <div class="window-dot dot-red"></div>
                         <div class="window-dot dot-yellow"></div>
                         <div class="window-dot dot-green"></div>
-                        <span class="text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="sheet" class="w-4 h-4 text-[#34C759]"></i> Q3_Financial_Tracker.xlsx
+                        <span class="text-[10px] md:text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
+                            <i data-lucide="sheet" class="w-3 h-3 md:w-4 md:h-4 text-[#34C759]"></i> Q3_Financial_Tracker.xlsx
                         </span>
                     </div>
-                    <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center bg-white/40 rounded-b-[2rem]">
-                        <div class="w-20 h-20 shrink-0 glass-panel !bg-[#34C759]/10 border-[#34C759]/20 rounded-2xl flex items-center justify-center">
-                            <i data-lucide="bar-chart-2" class="w-10 h-10 text-[#34C759]"></i>
+                    <div class="p-4 md:p-8 flex flex-col sm:flex-row gap-4 md:gap-6 items-center bg-white/40 rounded-b-[1.5rem] md:rounded-b-[2rem]">
+                        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 glass-panel !bg-[#34C759]/10 border-[#34C759]/20 rounded-xl md:rounded-2xl flex items-center justify-center">
+                            <i data-lucide="bar-chart-2" class="w-8 h-8 md:w-10 md:h-10 text-[#34C759]"></i>
                         </div>
-                        <div class="text-left">
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Automated Financial Tracker</h3>
-                            <p class="text-slate-600 mb-4 text-sm leading-relaxed">Dynamic VLOOKUPs and automated macros to streamline reporting.</p>
-                            <div class="flex gap-2">
-                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Data Entry</span>
-                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Google Sheets</span>
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">Automated Financial Tracker</h3>
+                            <p class="text-slate-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Dynamic VLOOKUPs and automated macros to streamline reporting.</p>
+                            <div class="flex flex-wrap justify-center sm:justify-start gap-2">
+                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Data Entry</span>
+                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Google Sheets</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- File Card 2 -->
-                <div class="drawer-card glass-panel rounded-[2rem]">
-                    <div class="admin-window-header rounded-t-[2rem]">
+                <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
+                    <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
                         <div class="window-dot dot-red"></div>
                         <div class="window-dot dot-yellow"></div>
                         <div class="window-dot dot-green"></div>
-                        <span class="text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="file-text" class="w-4 h-4 text-[#007AFF]"></i> Onboarding_SOP.docx
+                        <span class="text-[10px] md:text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-3 h-3 md:w-4 md:h-4 text-[#007AFF]"></i> Onboarding_SOP.docx
                         </span>
                     </div>
-                    <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center bg-white/50 backdrop-blur-md rounded-b-[2rem]">
-                        <div class="w-20 h-20 shrink-0 glass-panel !bg-[#007AFF]/10 border-[#007AFF]/20 rounded-2xl flex items-center justify-center">
-                            <i data-lucide="clipboard-list" class="w-10 h-10 text-[#007AFF]"></i>
+                    <div class="p-4 md:p-8 flex flex-col sm:flex-row gap-4 md:gap-6 items-center bg-white/50 backdrop-blur-md rounded-b-[1.5rem] md:rounded-b-[2rem]">
+                        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 glass-panel !bg-[#007AFF]/10 border-[#007AFF]/20 rounded-xl md:rounded-2xl flex items-center justify-center">
+                            <i data-lucide="clipboard-list" class="w-8 h-8 md:w-10 md:h-10 text-[#007AFF]"></i>
                         </div>
-                        <div class="text-left">
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Standard Operating Procedures</h3>
-                            <p class="text-slate-600 mb-4 text-sm leading-relaxed">Drafted, formatted, and standardized the client onboarding manual.</p>
-                            <div class="flex gap-2">
-                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Documentation</span>
-                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Formatting</span>
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">Standard Operating Procedures</h3>
+                            <p class="text-slate-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Drafted, formatted, and standardized the client onboarding manual.</p>
+                            <div class="flex flex-wrap justify-center sm:justify-start gap-2">
+                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Documentation</span>
+                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Formatting</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- File Card 3 -->
-                <div class="drawer-card glass-panel rounded-[2rem]">
-                    <div class="admin-window-header rounded-t-[2rem]">
+                <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
+                    <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
                         <div class="window-dot dot-red"></div>
                         <div class="window-dot dot-yellow"></div>
                         <div class="window-dot dot-green"></div>
-                        <span class="text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="presentation" class="w-4 h-4 text-[#FF9500]"></i> Pitch_Deck_Master.pptx
+                        <span class="text-[10px] md:text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
+                            <i data-lucide="presentation" class="w-3 h-3 md:w-4 md:h-4 text-[#FF9500]"></i> Pitch_Deck_Master.pptx
                         </span>
                     </div>
-                    <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center bg-white/60 backdrop-blur-lg rounded-b-[2rem]">
-                        <div class="w-20 h-20 shrink-0 glass-panel !bg-[#FF9500]/10 border-[#FF9500]/20 rounded-2xl flex items-center justify-center">
-                            <i data-lucide="layout-template" class="w-10 h-10 text-[#FF9500]"></i>
+                    <div class="p-4 md:p-8 flex flex-col sm:flex-row gap-4 md:gap-6 items-center bg-white/60 backdrop-blur-lg rounded-b-[1.5rem] md:rounded-b-[2rem]">
+                        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 glass-panel !bg-[#FF9500]/10 border-[#FF9500]/20 rounded-xl md:rounded-2xl flex items-center justify-center">
+                            <i data-lucide="layout-template" class="w-8 h-8 md:w-10 md:h-10 text-[#FF9500]"></i>
                         </div>
-                        <div class="text-left">
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Executive Presentations</h3>
-                            <p class="text-slate-600 mb-4 text-sm leading-relaxed">Synthesized complex datasets into visually appealing slide decks.</p>
-                            <div class="flex gap-2">
-                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Google Slides</span>
-                                <span class="px-3 py-1.5 glass-btn rounded-full text-[10px] font-bold text-slate-700">Visual Layout</span>
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">Executive Presentations</h3>
+                            <p class="text-slate-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Synthesized complex datasets into visually appealing slide decks.</p>
+                            <div class="flex flex-wrap justify-center sm:justify-start gap-2">
+                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Google Slides</span>
+                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Visual Layout</span>
                             </div>
                         </div>
                     </div>
@@ -479,17 +491,17 @@
     </section>
 
     <!-- Footer / Contact -->
-    <section id="contact" class="py-32 px-6 border-t border-white/30 relative z-10 text-center">
-        <div class="max-w-2xl mx-auto reveal glass-panel p-12 rounded-[3rem] shadow-2xl">
-            <div class="w-20 h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-8">
-                <i data-lucide="mail" class="w-10 h-10 text-[#007AFF]"></i>
+    <section id="contact" class="py-20 md:py-32 px-4 md:px-6 border-t border-white/30 relative z-10 text-center">
+        <div class="max-w-2xl mx-auto reveal glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
+            <div class="w-16 h-16 md:w-20 md:h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-6 md:mb-8">
+                <i data-lucide="mail" class="w-8 h-8 md:w-10 md:h-10 text-[#007AFF]"></i>
             </div>
-            <h2 class="text-5xl font-bold mb-6 tracking-tight">Ready to collaborate?</h2>
-            <p class="text-xl text-slate-600 mb-10">Whether it's managing administrative load, designing visual assets, or cutting the perfect video, I am ready to integrate into your workflow.</p>
-            <a href="mailto:contact@example.com" class="inline-flex items-center gap-3 px-10 py-5 bg-[#007AFF] text-white rounded-full font-bold text-xl hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight">Ready to collaborate?</h2>
+            <p class="text-base md:text-xl text-slate-600 mb-8 md:mb-10">Whether it's managing administrative load, designing visual assets, or cutting the perfect video, I am ready to integrate into your workflow.</p>
+            <a href="mailto:contact@example.com" class="inline-flex items-center justify-center w-full sm:w-auto gap-3 px-8 md:px-10 py-4 md:py-5 bg-[#007AFF] text-white rounded-full font-bold text-lg md:text-xl hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1">
                 Send an Email
             </a>
-            <p class="mt-12 text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
+            <p class="mt-10 md:mt-12 text-xs md:text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
         </div>
     </section>
 
@@ -498,7 +510,7 @@
         lucide.createIcons();
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // 1. Reveal Animations
+        // Reveal Animations
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -508,14 +520,13 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-
         // ----------------------------------------------------
-        // 2. 3D Turning Video Carousel
+        // 3D Turning Video Carousel
         // ----------------------------------------------------
         const videoData = [
             { title: "Behind the Lens", type: "Trailer", video: "https://www.youtube.com/embed/LoQxHktbHmg?enablejsapi=1", poster: "Photos/Thumbnail.png", desc: "A Story of friendships and expression of creativity." },
             { title: "Kiev and Ching", type: "Teaser", video: "https://www.youtube.com/embed/XIjJvw1e5GQ?enablejsapi=1", poster: "Photos/Thumbnail PreWed.png", desc: "Showcasing the love and joy of a couple's journey." },
-            { title: "Communal Ranch", type: "Vlog", video: "https://drive.google.com/file/d/1EgAvlB6Ke4qKkcDqJWzkMSU3lyIp4uF2/preview", poster: "https://images.unsplash.com/photo-1585501332814-1e5ea4c886b6?auto=format&fit=crop&w=800&q=80", desc: "A travel vlog showcasing the beauty of a rural setting." },
+            { title: "Communal Ranch", type: "Vlog", video: "https://www.youtube.com/embed/DhnkGd_rWFI?enablejsapi=1", poster: "https://images.unsplash.com/photo-1585501332814-1e5ea4c886b6?auto=format&fit=crop&w=800&q=80", desc: "A travel vlog showcasing the beauty of a rural setting." }, // Fixed URL format
             { title: "Eleventh Hour", type: "Short Film", video: "https://www.youtube.com/embed/l_E4lYtVce4?enablejsapi=1", poster: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=800&q=80", desc: "A short film exploring themes of time and memory." },
             { title: "Team Mang", type: "Vlog", video: "https://www.youtube.com/embed/4AyiRwuoqhQ?enablejsapi=1", poster: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80", desc: "Event highlight and showcasing a team's collaborative efforts." },
             { title: "Pre-Wedding", type: "Short Film", video: "https://www.youtube.com/embed/umVHQzLy2aM?enablejsapi=1", poster: "https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?auto=format&fit=crop&w=800&q=80", desc: "A short film capturing the emotions and moments of the couple's journey." }
@@ -531,30 +542,31 @@
             const spinner = document.getElementById('videoSpinner');
             spinner.innerHTML = '';
             
-            // Calculate radius dynamically to fit layout constraints
             const spinnerWidth = spinner.offsetWidth;
-            carouselRadius = Math.round((spinnerWidth / 2) / Math.tan(Math.PI / totalVideos)) + 40; 
+            // Slightly smaller radius on mobile to fit screen
+            const padding = window.innerWidth < 768 ? 20 : 40;
+            carouselRadius = Math.round((spinnerWidth / 2) / Math.tan(Math.PI / totalVideos)) + padding; 
             
             videoData.forEach((data, i) => {
                 const angle = i * angleStep;
                 const div = document.createElement('div');
-                div.className = "absolute top-0 left-0 w-full h-full glass-panel rounded-[2.5rem] p-4 flex flex-col group carousel-3d-item transition-all duration-700 ease-out";
+                div.className = "absolute top-0 left-0 w-full h-full glass-panel rounded-[1.5rem] md:rounded-[2.5rem] p-2 md:p-4 flex flex-col group carousel-3d-item transition-all duration-700 ease-out";
                 div.style.transform = `rotateY(${angle}deg) translateZ(${carouselRadius}px)`;
                 
                 div.innerHTML = `
-                    <div class="aspect-video w-full relative rounded-[2rem] overflow-hidden bg-black shadow-inner pointer-events-auto">
-                        <iframe src="${data.video}" title="${data.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none rounded-[2rem]"></iframe>
-                        <div class="absolute top-4 left-4 glass-panel !bg-black/40 text-white px-4 py-1.5 rounded-full text-xs font-bold backdrop-blur-md pointer-events-none">${data.type}</div>
+                    <div class="aspect-video w-full relative rounded-[1rem] md:rounded-[2rem] overflow-hidden bg-black shadow-inner pointer-events-auto">
+                        <iframe src="${data.video}" title="${data.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none rounded-[1rem] md:rounded-[2rem]"></iframe>
+                        <div class="iframe-overlay"></div>
+                        <div class="absolute top-2 left-2 md:top-4 md:left-4 glass-panel !bg-black/40 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold backdrop-blur-md pointer-events-none">${data.type}</div>
                     </div>
-                    <div class="p-6 pointer-events-none">
-                        <h3 class="text-2xl font-bold mb-2">${data.title}</h3>
-                        <p class="text-slate-600">${data.desc}</p>
+                    <div class="p-3 md:p-6 pointer-events-none text-center md:text-left">
+                        <h3 class="text-base md:text-2xl font-bold mb-1 md:mb-2">${data.title}</h3>
+                        <p class="text-xs md:text-base text-slate-600 line-clamp-2 md:line-clamp-none">${data.desc}</p>
                     </div>
                 `;
                 spinner.appendChild(div);
             });
 
-            lucide.createIcons();
             applyCarouselTransform();
         }
 
@@ -562,7 +574,6 @@
             const spinner = document.getElementById('videoSpinner');
             spinner.style.transform = `translateZ(${-carouselRadius}px) rotateY(${currentRotation}deg)`;
             
-            // Find front index
             let normalizedIndex = Math.round(-currentRotation / angleStep) % totalVideos;
             if (normalizedIndex < 0) normalizedIndex += totalVideos;
             
@@ -571,20 +582,21 @@
                 if (i === normalizedIndex) {
                     item.style.opacity = '1';
                     item.style.filter = 'blur(0px)';
-                    item.style.pointerEvents = 'auto';
+                    item.classList.add('pointer-events-auto');
+                    item.classList.remove('pointer-events-none');
                 } else {
                     item.style.opacity = '0.4';
                     item.style.filter = 'blur(4px)';
-                    item.style.pointerEvents = 'none';
+                    item.classList.remove('pointer-events-auto');
+                    item.classList.add('pointer-events-none');
                 }
             });
 
             if (activeIndex !== normalizedIndex) {
-                // Pause previous video by resetting src
                 const prevItem = items[activeIndex];
                 if (prevItem) {
                     const iframe = prevItem.querySelector('iframe');
-                    if (iframe) iframe.src = iframe.src;
+                    if (iframe) iframe.src = iframe.src; // resets video
                 }
                 activeIndex = normalizedIndex;
             }
@@ -595,17 +607,41 @@
             applyCarouselTransform();
         }
 
-        // Setup Carousel on load & resize
         create3DCarousel();
         window.addEventListener('resize', create3DCarousel);
 
+        // Mobile touch swipe for 3D Carousel
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const touchArea = document.getElementById('carouselTouchArea');
+        
+        touchArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        touchArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const threshold = 50;
+            if (touchStartX - touchEndX > threshold) {
+                rotateCarousel(-1); // swipe left
+            }
+            if (touchEndX - touchStartX > threshold) {
+                rotateCarousel(1); // swipe right
+            }
+        }
+
         // ----------------------------------------------------
-        // 3. Auto-scrolling Gallery Wall + Jump Buttons
+        // Auto-scrolling Gallery Wall + Touch drag
         // ----------------------------------------------------
         const galleryWall = document.getElementById('galleryWall');
+        const galleryContainer = document.getElementById('galleryContainer');
         const originalBlock = document.querySelector('.museum-block');
         
-        // Clone block to ensure infinite seamless scrolling
+        // Clone to ensure loop
         galleryWall.appendChild(originalBlock.cloneNode(true));
         galleryWall.appendChild(originalBlock.cloneNode(true));
 
@@ -613,25 +649,60 @@
         let gallerySpeed = 1;
         let isGalleryHovered = false;
         
-        document.getElementById('galleryContainer').addEventListener('mouseenter', () => isGalleryHovered = true);
-        document.getElementById('galleryContainer').addEventListener('mouseleave', () => isGalleryHovered = false);
+        galleryContainer.addEventListener('mouseenter', () => isGalleryHovered = true);
+        galleryContainer.addEventListener('mouseleave', () => isGalleryHovered = false);
+        galleryContainer.addEventListener('touchstart', () => isGalleryHovered = true, {passive: true});
+        galleryContainer.addEventListener('touchend', () => isGalleryHovered = false, {passive: true});
+
+        // Add drag to scroll
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        galleryContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - galleryContainer.offsetLeft;
+            scrollLeft = galleryScrollPos;
+        });
+        galleryContainer.addEventListener('mouseleave', () => { isDown = false; });
+        galleryContainer.addEventListener('mouseup', () => { isDown = false; });
+        galleryContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - galleryContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            galleryScrollPos = scrollLeft - walk;
+        });
+
+        // Touch drag
+        galleryContainer.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - galleryContainer.offsetLeft;
+            scrollLeft = galleryScrollPos;
+        }, {passive: true});
+        galleryContainer.addEventListener('touchend', () => { isDown = false; });
+        galleryContainer.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - galleryContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            galleryScrollPos = scrollLeft - walk;
+        }, {passive: true});
 
         function animateGallery() {
-            if (!isGalleryHovered || Math.abs(gallerySpeed) > 1) {
+            if (!isDown && (!isGalleryHovered || Math.abs(gallerySpeed) > 1)) {
                 galleryScrollPos += gallerySpeed;
-                
-                // Infinite reset condition (when passing the middle clone threshold)
-                const threshold = galleryWall.scrollWidth / 3;
-                if (galleryScrollPos >= threshold) {
-                    galleryScrollPos -= threshold;
-                } else if (galleryScrollPos < 0) {
-                    galleryScrollPos += threshold;
-                }
-                
-                galleryWall.style.transform = `translateX(${-galleryScrollPos}px)`;
             }
+            
+            // Loop boundaries
+            const threshold = galleryWall.scrollWidth / 3;
+            if (galleryScrollPos >= threshold) {
+                galleryScrollPos -= threshold;
+            } else if (galleryScrollPos < 0) {
+                galleryScrollPos += threshold;
+            }
+            
+            galleryWall.style.transform = `translateX(${-galleryScrollPos}px)`;
 
-            // Ease back to normal speed if boosted by buttons
             if (gallerySpeed > 1) gallerySpeed *= 0.95;
             if (gallerySpeed < -1) gallerySpeed *= 0.95;
             if (Math.abs(gallerySpeed) < 1.1) gallerySpeed = 1;
@@ -641,53 +712,55 @@
         animateGallery();
 
         window.scrollGallery = function(dir) {
-            gallerySpeed = dir * 25; // Burst of speed for jump effect
+            gallerySpeed = dir * 25; 
         }
 
         // ----------------------------------------------------
-        // 4. Admin Drawer Rolodex Scroll Logic
+        // Admin Drawer Rolodex Scroll Logic
         // ----------------------------------------------------
         const adminSection = document.getElementById('admin');
         const rolodex = document.getElementById('rolodex');
         const cards = document.querySelectorAll('.drawer-card');
-        const anglePerCard = 35; // Spread angle
+        const anglePerCard = 35; 
 
         const updateDrawerRolodex = () => {
             const isMobile = window.innerWidth < 768;
-            const radius = isMobile ? 250 : 350;
+            const radius = isMobile ? 200 : 350;
 
-            // Position cards in a static arc initially
             cards.forEach((card, i) => {
                 card.style.transform = `rotateX(${-i * anglePerCard}deg) translateZ(${radius}px)`;
             });
 
-            // Calculate rotation based on scroll position
             const rect = adminSection.getBoundingClientRect();
             const windowHeight = window.innerHeight;
             
             let progress = 0;
             if (rect.top <= 0) {
-                // Determine how far down the section we've scrolled
                 progress = Math.max(0, Math.min(1, -rect.top / (rect.height - windowHeight)));
             }
 
             const maxRotation = (cards.length - 1) * anglePerCard;
             const currentRotation = progress * maxRotation;
             
-            // Rotate the entire container to reveal cards
             rolodex.style.transform = `rotateX(${currentRotation}deg)`;
 
-            // Fade cards that are rotated away
             cards.forEach((card, i) => {
                 const cardAngle = (-i * anglePerCard) + currentRotation;
                 const opacity = 1 - Math.min(1, Math.abs(cardAngle) / 60);
                 card.style.opacity = Math.max(0, opacity);
+                
+                // Allow interaction only with the front-facing card
+                if (Math.abs(cardAngle) < 10) {
+                    card.style.pointerEvents = 'auto';
+                } else {
+                    card.style.pointerEvents = 'none';
+                }
             });
         };
 
         window.addEventListener('scroll', updateDrawerRolodex);
         window.addEventListener('resize', updateDrawerRolodex);
-        updateDrawerRolodex(); // Initial call
+        updateDrawerRolodex();
 
     </script>
 </body>

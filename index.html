@@ -492,33 +492,39 @@
 
     <!-- Footer / Contact -->
     <section id="contact" class="py-20 md:py-32 px-4 md:px-6 border-t border-white/30 relative z-10 text-center">
-        <div class="max-w-2xl mx-auto reveal glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
+        <div class="max-w-3xl mx-auto reveal glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
             <div class="w-16 h-16 md:w-20 md:h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-6 md:mb-8">
                 <i data-lucide="mail" class="w-8 h-8 md:w-10 md:h-10 text-[#007AFF]"></i>
             </div>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight">Ready to collaborate?</h2>
-            <p class="text-base md:text-xl text-slate-600 mb-8 md:mb-10">Whether it's managing administrative load, designing visual assets, or cutting the perfect video, I am ready to integrate into your workflow.</p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <!-- Replace YOUR_EMAIL@GMAIL.COM with your actual email address -->
-                <a href="mailto:samlawrencedadang@gmail.com?subject=Portfolio%20Inquiry" class="inline-flex items-center justify-center w-full sm:w-auto gap-3 px-8 md:px-10 py-4 md:py-5 bg-[#007AFF] text-white rounded-full font-bold text-lg md:text-xl hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1">
-                    Send an Email
-                </a>
-                
-                <div class="flex items-center justify-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
-                    <a href="https://www.linkedin.com/in/dadang-sam-lawrence-a-undefined-2908363a8/" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] md:w-[60px] md:h-[60px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
-                        <i data-lucide="linkedin" class="w-6 h-6"></i>
-                    </a>
-                    <a href="https://www.facebook.com/samlawrence.dadang.5" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] md:w-[60px] md:h-[60px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
-                        <i data-lucide="facebook" class="w-6 h-6"></i>
-                    </a>
-                    <a href="https://www.instagram.com/luwyyng/?hl=en" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] md:w-[60px] md:h-[60px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
-                        <i data-lucide="instagram" class="w-6 h-6"></i>
-                    </a>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Let's Connect</h2>
+            <p class="text-base md:text-lg text-slate-600 mb-8 md:mb-10">Have a project in mind or want to collaborate? Send me a message directly.</p>
+
+            <form action="mailto:samlawrencedadang@gmail.com" method="POST" enctype="text/plain" class="max-w-xl mx-auto text-left flex flex-col gap-4 mb-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" name="name" placeholder="Your Name" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
+                    <input type="email" name="email" placeholder="Your Email" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
                 </div>
+                <input type="text" name="subject" placeholder="Subject" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
+                <textarea name="message" rows="4" placeholder="Your Message" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500 resize-none"></textarea>
+
+                <button type="submit" class="w-full py-4 bg-[#007AFF] text-white rounded-2xl font-bold text-lg hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1 mt-2">
+                    Send Message
+                </button>
+            </form>
+
+            <div class="flex items-center justify-center gap-4 border-t border-white/30 pt-8">
+                <a href="https://www.linkedin.com/in/dadang-sam-lawrence-a-undefined-2908363a8/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+                <a href="https://www.facebook.com/samlawrence.dadang.5" target="_blank" rel="noopener noreferrer" class="w-12 h-12 glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                    <i data-lucide="facebook" class="w-5 h-5"></i>
+                </a>
+                <a href="https://www.instagram.com/luwyyng/?hl=en" target="_blank" rel="noopener noreferrer" class="w-12 h-12 glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
             </div>
 
-            <p class="mt-10 md:mt-12 text-xs md:text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
+            <p class="mt-8 text-xs md:text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
         </div>
     </section>
 

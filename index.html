@@ -499,7 +499,7 @@
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Let's Connect</h2>
             <p class="text-base md:text-lg text-slate-600 mb-8 md:mb-10">Have a project in mind or want to collaborate? Send me a message directly.</p>
 
-            <form action="mailto:samlawrencedadang@gmail.com" method="POST" enctype="text/plain" class="max-w-xl mx-auto text-left flex flex-col gap-4 mb-10">
+            <form onsubmit="sendEmail(event)" class="max-w-xl mx-auto text-left flex flex-col gap-4 mb-10">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input type="text" name="name" placeholder="Your Name" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
                     <input type="email" name="email" placeholder="Your Email" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
@@ -785,6 +785,23 @@
         window.addEventListener('scroll', updateDrawerRolodex);
         window.addEventListener('resize', updateDrawerRolodex);
         updateDrawerRolodex();
+
+        // ----------------------------------------------------
+        // 5. Email Form Handling
+        // ----------------------------------------------------
+        function sendEmail(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+
+            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+            const mailtoLink = `mailto:samlawrencedadang@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            window.location.href = mailtoLink;
+        }
 
     </script>
 </body>

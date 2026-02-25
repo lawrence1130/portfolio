@@ -7,7 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+   (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your Public Key from EmailJS
+   })();
+</script>
     <style>
         :root {
             --ios-bg: #f2f2f7;
@@ -791,16 +796,18 @@
         // ----------------------------------------------------
         function sendEmail(event) {
             event.preventDefault();
-            const formData = new FormData(event.target);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
 
-            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-            const mailtoLink = `mailto:samlawrencedadang@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            // These IDs come from your EmailJS dashboard
+            const serviceID = "YOUR_SERVICE_ID";
+            const templateID = "YOUR_TEMPLATE_ID";
 
-            window.location.href = mailtoLink;
+            emailjs.sendForm(serviceID, templateID, event.target)
+                .then(() => {
+                    alert("Message sent successfully!");
+                    event.target.reset(); // Clears the form
+                }, (err) => {
+                    alert("Failed to send message. Error: " + JSON.stringify(err));
+                });
         }
 
     </script>

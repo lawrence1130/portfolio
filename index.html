@@ -2,17 +2,12 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>iOS Glass Portfolio | Virtual Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-   (function(){
-      emailjs.init("liSlTN9jQpxIMld8k"); // Replace with your Public Key from EmailJS
-   })();
-</script>
+    
     <style>
         :root {
             --ios-bg: #f2f2f7;
@@ -25,8 +20,16 @@
             color: #1c1c1e;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Hardware Acceleration for Smoother Rendering */
+        .gpu-accel {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* Glassmorphism Essentials */
         .glass-panel {
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: saturate(180%) blur(25px);
@@ -42,7 +45,7 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
             text-decoration: none;
             touch-action: manipulation;
@@ -54,12 +57,15 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
+        /* 3D Carousel */
         .perspective-1500 { perspective: 1500px; }
         .perspective-2000 { perspective: 2000px; }
         .transform-style-3d { transform-style: preserve-3d; }
+        
         .carousel-3d-item {
-            backface-visibility: visible;
-            will-change: transform, opacity, filter;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            will-change: transform, opacity;
         }
         
         .carousel-nav-btn {
@@ -84,88 +90,69 @@
             .nav-right { right: 0.5rem; }
         }
 
+        /* Museum Gallery Wall - Masonry Grid */
         .gallery-wrapper {
-            overflow: hidden;
-            width: 100vw;
+            width: 100%;
             position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
             padding: 2rem 0;
-            cursor: grab;
-            white-space: nowrap;
-            touch-action: pan-y;
-        }
-        .gallery-wrapper:active { cursor: grabbing; }
-        .gallery-track {
-            display: inline-flex;
-            gap: 10px;
-            align-items: center;
-            will-change: transform;
         }
         
         .museum-block {
-            display: grid;
-            grid-template-columns: repeat(14, 60px);
-            grid-template-rows: repeat(8, 50px);
-            gap: 10px;
+            column-count: 2;
+            column-gap: 16px;
             padding: 10px;
         }
         @media (min-width: 768px) {
             .museum-block {
-                grid-template-columns: repeat(14, 100px);
-                grid-template-rows: repeat(8, 80px);
-                gap: 20px;
+                column-count: 3;
+                column-gap: 24px;
                 padding: 20px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .museum-block {
+                column-count: 4;
             }
         }
         
         .museum-frame {
+            break-inside: avoid;
+            margin-bottom: 16px;
             position: relative;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
             z-index: 1;
             padding: 0.5rem;
             border-radius: 1rem;
+            display: inline-block;
+            width: 100%;
+            will-change: transform;
         }
         @media (min-width: 768px) {
-            .museum-frame { padding: 0.75rem; border-radius: 1.5rem; }
+            .museum-frame { padding: 0.75rem; border-radius: 1.5rem; margin-bottom: 24px; }
         }
         
-        .museum-frame:hover {
-            transform: scale(1.15);
-            z-index: 50;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+        @media (hover: hover) {
+            .museum-frame:hover {
+                transform: scale(1.05) translateZ(0); 
+                z-index: 50;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+            }
         }
         
         .museum-frame img {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
             border-radius: 0.5rem;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
             pointer-events: none;
+            background-color: rgba(255,255,255,0.2);
         }
         @media (min-width: 768px) {
             .museum-frame img { border-radius: 0.75rem; }
         }
 
-        .frame-1 { grid-column: span 3; grid-row: span 3; }
-        .frame-2 { grid-column: span 4; grid-row: span 2; }
-        .frame-3 { grid-column: span 3; grid-row: span 3; }
-        .frame-4 { grid-column: span 2; grid-row: span 2; }
-        .frame-5 { grid-column: span 2; grid-row: span 3; }
-        .frame-6 { grid-column: span 3; grid-row: span 2; }
-        .frame-7 { grid-column: span 3; grid-row: span 2; }
-        .frame-centerpiece { grid-column: span 6; grid-row: span 4; }
-        .frame-8 { grid-column: span 3; grid-row: span 3; }
-        .frame-9 { grid-column: span 2; grid-row: span 3; }
-        .frame-10 { grid-column: span 3; grid-row: span 3; }
-        .frame-11 { grid-column: span 3; grid-row: span 2; }
-        .frame-12 { grid-column: span 2; grid-row: span 2; }
-        .frame-13 { grid-column: span 3; grid-row: span 3; }
-        .frame-14 { grid-column: span 3; grid-row: span 2; }
-
+        /* File Drawer Rolodex */
         #admin { position: relative; height: 300vh; }
         
         .sticky-container {
@@ -191,6 +178,8 @@
             height: max-content;
             transform-origin: center center;
             will-change: transform, opacity;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         .admin-window-header {
@@ -210,36 +199,38 @@
         .dot-yellow { background: #FFCC00; }
         .dot-green { background: #34C759; }
 
+        /* Abstract Background */
         .bg-orb {
             position: fixed;
             border-radius: 50%;
             filter: blur(140px);
             z-index: -1;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.5;
             animation: float 25s infinite ease-in-out alternate;
             will-change: transform;
+            transform: translateZ(0);
         }
         .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(0, 122, 255, 0.35); animation-delay: 0s; }
         .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(88, 86, 214, 0.25); animation-delay: -5s; }
 
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-5%, 10%) scale(1.1); }
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(-5%, 10%, 0) scale(1.1); }
         }
 
+        /* Scroll Animations */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px) translateZ(0);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
         }
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) translateZ(0);
         }
 
-        /* Iframe interaction fix for mobile swipe */
         .iframe-overlay {
             position: absolute;
             inset: 0;
@@ -288,11 +279,12 @@
         </a>
     </section>
 
+    <!-- Profile Section -->
     <section id="about" class="py-20 md:py-32 px-4 md:px-6 overflow-hidden">
         <div class="max-w-6xl mx-auto reveal">
             <div class="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
                 <div class="relative max-w-sm mx-auto lg:max-w-none w-full">
-                    <div class="aspect-square glass-panel rounded-[2rem] md:rounded-[2.5rem] overflow-hidden flex items-center justify-center p-2 md:p-3">
+                    <div class="aspect-square glass-panel rounded-[2rem] md:rounded-[2.5rem] overflow-hidden flex items-center justify-center p-2 md:p-3 gpu-accel">
                         <img src="Photos/Profile.png" alt="Profile Picture" class="w-full h-full object-cover rounded-[1.5rem] md:rounded-[2rem]">
                     </div>
                     <div class="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 p-4 md:p-8 bg-[#007AFF]/90 backdrop-blur-xl border border-white/30 text-white rounded-xl md:rounded-[2rem] shadow-xl">
@@ -333,7 +325,7 @@
                 </h2>
                 <p class="text-sm md:text-lg text-slate-600">Cinematic storytelling and commercial edits. Swipe or click to turn.</p>
             </div>
-            <a href="#" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#007AFF] flex items-center gap-2">
+            <a href="archives.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#007AFF] flex items-center gap-2">
                 Open Full Video Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
         </div>
@@ -347,58 +339,46 @@
             </button>
 
             <!-- 3D Spinner Container -->
-            <div id="videoSpinner" class="relative w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[35vw] h-full transform-style-3d transition-transform duration-700 ease-in-out">
+            <div id="videoSpinner" class="relative w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[35vw] h-full transform-style-3d transition-transform duration-700 ease-out">
                 <!-- Javascript will inject items here -->
             </div>
         </div>
     </section>
 
     <!-- 2. Graphic Design Museum Gallery Wall -->
-    <section id="graphics" class="py-20 md:py-32 relative overflow-hidden group">
+    <section id="graphics" class="py-20 md:py-32 relative group">
         <div class="max-w-7xl mx-auto px-4 md:px-6 mb-6 md:mb-8 reveal flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-10">
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
                     <i data-lucide="palette" class="w-6 h-6 md:w-8 md:h-8 text-[#5856D6]"></i> Museum Gallery
                 </h2>
-                <p class="text-sm md:text-lg text-slate-600">A continuous exhibition tailored to visual frame proportions. Drag to scroll.</p>
+                <p class="text-sm md:text-lg text-slate-600">A curated exhibition displaying all visual frame proportions.</p>
             </div>
-            <a href="#" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#5856D6] flex items-center gap-2">
+            <a href="archives.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#5856D6] flex items-center gap-2">
                 Open Full Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
         </div>
 
-        <button onclick="scrollGallery(-1)" class="carousel-nav-btn nav-left glass-btn md:opacity-0 md:group-hover:opacity-100 text-slate-700 hover:text-[#007AFF]">
-            <i data-lucide="chevron-left"></i>
-        </button>
-        <button onclick="scrollGallery(1)" class="carousel-nav-btn nav-right glass-btn md:opacity-0 md:group-hover:opacity-100 text-slate-700 hover:text-[#007AFF]">
-            <i data-lucide="chevron-right"></i>
-        </button>
-
         <div class="gallery-wrapper reveal" id="galleryContainer">
-            <div class="gallery-track" id="galleryWall">
-                <!-- Grid Block 1 -->
-                <div class="museum-block">
-                    <div class="museum-frame frame-1 glass-panel"><img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&w=400&h=400&q=80"></div>
-                    <div class="museum-frame frame-2 glass-panel"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&h=300&q=80"></div>
-                    <div class="museum-frame frame-3 glass-panel"><img src="https://images.unsplash.com/photo-1558470598-a5dda9640f6b?auto=format&fit=crop&w=400&h=400&q=80"></div>
-                    <div class="museum-frame frame-4 glass-panel"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=300&h=300&q=80"></div>
-                    <div class="museum-frame frame-centerpiece glass-panel"><img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=800&h=600&q=80"></div>
-                    <div class="museum-frame frame-5 glass-panel"><img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=300&h=500&q=80"></div>
-                    <div class="museum-frame frame-6 glass-panel"><img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&h=300&q=80"></div>
-                    <div class="museum-frame frame-7 glass-panel"><img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=400&h=300&q=80"></div>
-                    <div class="museum-frame frame-8 glass-panel"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=400&h=400&q=80"></div>
-                    <div class="museum-frame frame-9 glass-panel"><img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&w=300&h=500&q=80"></div>
-                    <div class="museum-frame frame-10 glass-panel"><img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=400&h=400&q=80"></div>
-                    <div class="museum-frame frame-11 glass-panel"><img src="https://images.unsplash.com/photo-1605106702734-205df224ecce?auto=format&fit=crop&w=400&h=300&q=80"></div>
-                    <div class="museum-frame frame-12 glass-panel"><img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=300&h=300&q=80"></div>
-                    <div class="museum-frame frame-13 glass-panel"><img src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=400&h=400&q=80"></div>
-                    <div class="museum-frame frame-14 glass-panel"><img src="https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?auto=format&fit=crop&w=400&h=300&q=80"></div>
-                </div>
+            <!-- Masonry Grid Block showing all images naturally -->
+            <div class="museum-block max-w-7xl mx-auto">
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/2024.png" alt="Graphic 2024"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/2ndSPTA.png" alt="2nd SPTA"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Castle.png" alt="Castle"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Dadang IT5, M2Act1 Emergency Plan.png" alt="Emergency Plan"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Dipolog.png" alt="Dipolog"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/ISSUES.png" alt="Issues"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/January.png" alt="January"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/JLK.png" alt="JLK"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Katipunan.png" alt="Katipunan"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/kiev and ching.png" alt="Kiev and Ching"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/2025.png" alt="Graphic 2025"></div>
+                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Panguil.png" alt="Panguil"></div>
             </div>
         </div>
     </section>
 
-    <!-- 3. Administrative Drawer (Rolodex Rotation) -->
+    <!-- 3. Administrative Drawer (Rolodex Rotation) 
     <section id="admin">
         <div class="sticky-container perspective-2000">
             <div class="w-full max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-50">
@@ -408,15 +388,15 @@
                     </h2>
                     <p class="text-sm md:text-lg text-slate-600">Scroll to roll through administrative files.</p>
                 </div>
-                <a href="#" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#FF9500] flex items-center gap-2">
+                <a href="admin.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#FF9500] flex items-center gap-2">
                     Open Full Drawer <i data-lucide="external-link" class="w-4 h-4"></i>
                 </a>
             </div>
 
-            <!-- Rolodex Container -->
+            Rolodex Container 
             <div id="rolodex" class="relative w-full max-w-4xl h-[350px] md:h-[400px] transform-style-3d px-4 md:px-6">
                 
-                <!-- File Card 1 -->
+                File Card 1
                 <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
                     <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
                         <div class="window-dot dot-red"></div>
@@ -441,7 +421,7 @@
                     </div>
                 </div>
 
-                <!-- File Card 2 -->
+                File Card 2
                 <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
                     <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
                         <div class="window-dot dot-red"></div>
@@ -466,7 +446,7 @@
                     </div>
                 </div>
 
-                <!-- File Card 3 -->
+                File Card 3
                 <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
                     <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
                         <div class="window-dot dot-red"></div>
@@ -493,9 +473,9 @@
 
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <!-- Footer / Contact -->
+    <!-- Footer / Contact --> 
     <section id="contact" class="py-20 md:py-32 px-4 md:px-6 border-t border-white/30 relative z-10 text-center">
         <div class="max-w-3xl mx-auto reveal glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
             <div class="w-16 h-16 md:w-20 md:h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-6 md:mb-8">
@@ -504,7 +484,7 @@
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Let's Connect</h2>
             <p class="text-base md:text-lg text-slate-600 mb-8 md:mb-10">Have a project in mind or want to collaborate? Send me a message directly.</p>
 
-            <form onsubmit="sendEmail(event)" class="max-w-xl mx-auto text-left flex flex-col gap-4 mb-10">
+            <!--<form onsubmit="sendEmail(event)" class="max-w-xl mx-auto text-left flex flex-col gap-4 mb-10">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input type="text" name="name" placeholder="Your Name" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
                     <input type="email" name="email" placeholder="Your Email" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
@@ -515,7 +495,7 @@
                 <button type="submit" class="w-full py-4 bg-[#007AFF] text-white rounded-2xl font-bold text-lg hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1 mt-2">
                     Send Message
                 </button>
-            </form>
+            </form>-->
 
             <div class="flex items-center justify-center gap-4 border-t border-white/30 pt-8">
                 <a href="https://www.linkedin.com/in/dadang-sam-lawrence-a-undefined-2908363a8/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
@@ -533,13 +513,12 @@
         </div>
     </section>
 
-
     <script>
         // Initialize Icons
         lucide.createIcons();
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Reveal Animations
+        // 1. Reveal Animations with Throttling
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -550,7 +529,7 @@
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         // ----------------------------------------------------
-        // 3D Turning Video Carousel
+        // 2. 3D Turning Video Carousel
         // ----------------------------------------------------
         const videoData = [
             { title: "Behind the Lens", type: "Trailer", video: "https://www.youtube.com/embed/LoQxHktbHmg?enablejsapi=1", poster: "Photos/Thumbnail.png", desc: "A Story of friendships and expression of creativity." },
@@ -572,7 +551,7 @@
             spinner.innerHTML = '';
             
             const spinnerWidth = spinner.offsetWidth;
-            // Slightly smaller radius on mobile to fit screen
+            // Slightly smaller radius on mobile to fit screen securely
             const padding = window.innerWidth < 768 ? 20 : 40;
             carouselRadius = Math.round((spinnerWidth / 2) / Math.tan(Math.PI / totalVideos)) + padding; 
             
@@ -625,7 +604,7 @@
                 const prevItem = items[activeIndex];
                 if (prevItem) {
                     const iframe = prevItem.querySelector('iframe');
-                    if (iframe) iframe.src = iframe.src; // resets video
+                    if (iframe) iframe.src = iframe.src; // resets video playback
                 }
                 activeIndex = normalizedIndex;
             }
@@ -637,7 +616,9 @@
         }
 
         create3DCarousel();
-        window.addEventListener('resize', create3DCarousel);
+        window.addEventListener('resize', () => {
+            requestAnimationFrame(create3DCarousel);
+        });
 
         // Mobile touch swipe for 3D Carousel
         let touchStartX = 0;
@@ -664,88 +645,7 @@
         }
 
         // ----------------------------------------------------
-        // Auto-scrolling Gallery Wall + Touch drag
-        // ----------------------------------------------------
-        const galleryWall = document.getElementById('galleryWall');
-        const galleryContainer = document.getElementById('galleryContainer');
-        const originalBlock = document.querySelector('.museum-block');
-        
-        // Clone to ensure loop
-        galleryWall.appendChild(originalBlock.cloneNode(true));
-        galleryWall.appendChild(originalBlock.cloneNode(true));
-
-        let galleryScrollPos = 0;
-        let gallerySpeed = 1;
-        let isGalleryHovered = false;
-        
-        galleryContainer.addEventListener('mouseenter', () => isGalleryHovered = true);
-        galleryContainer.addEventListener('mouseleave', () => isGalleryHovered = false);
-        galleryContainer.addEventListener('touchstart', () => isGalleryHovered = true, {passive: true});
-        galleryContainer.addEventListener('touchend', () => isGalleryHovered = false, {passive: true});
-
-        // Add drag to scroll
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        galleryContainer.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - galleryContainer.offsetLeft;
-            scrollLeft = galleryScrollPos;
-        });
-        galleryContainer.addEventListener('mouseleave', () => { isDown = false; });
-        galleryContainer.addEventListener('mouseup', () => { isDown = false; });
-        galleryContainer.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - galleryContainer.offsetLeft;
-            const walk = (x - startX) * 2;
-            galleryScrollPos = scrollLeft - walk;
-        });
-
-        // Touch drag
-        galleryContainer.addEventListener('touchstart', (e) => {
-            isDown = true;
-            startX = e.touches[0].pageX - galleryContainer.offsetLeft;
-            scrollLeft = galleryScrollPos;
-        }, {passive: true});
-        galleryContainer.addEventListener('touchend', () => { isDown = false; });
-        galleryContainer.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
-            const x = e.touches[0].pageX - galleryContainer.offsetLeft;
-            const walk = (x - startX) * 2;
-            galleryScrollPos = scrollLeft - walk;
-        }, {passive: true});
-
-        function animateGallery() {
-            if (!isDown && (!isGalleryHovered || Math.abs(gallerySpeed) > 1)) {
-                galleryScrollPos += gallerySpeed;
-            }
-            
-            // Loop boundaries
-            const threshold = galleryWall.scrollWidth / 3;
-            if (galleryScrollPos >= threshold) {
-                galleryScrollPos -= threshold;
-            } else if (galleryScrollPos < 0) {
-                galleryScrollPos += threshold;
-            }
-            
-            galleryWall.style.transform = `translateX(${-galleryScrollPos}px)`;
-
-            if (gallerySpeed > 1) gallerySpeed *= 0.95;
-            if (gallerySpeed < -1) gallerySpeed *= 0.95;
-            if (Math.abs(gallerySpeed) < 1.1) gallerySpeed = 1;
-            
-            requestAnimationFrame(animateGallery);
-        }
-        animateGallery();
-
-        window.scrollGallery = function(dir) {
-            gallerySpeed = dir * 25; 
-        }
-
-        // ----------------------------------------------------
-        // Admin Drawer Rolodex Scroll Logic
+        // 3. Admin Drawer Rolodex Scroll Logic
         // ----------------------------------------------------
         const adminSection = document.getElementById('admin');
         const rolodex = document.getElementById('rolodex');
@@ -789,25 +689,23 @@
 
         window.addEventListener('scroll', updateDrawerRolodex);
         window.addEventListener('resize', updateDrawerRolodex);
-        updateDrawerRolodex();
-
+        updateDrawerRolodex(); // Initial call
+        
         // ----------------------------------------------------
-        // 5. Email Form Handling
+        // 4. Email Form Handling
         // ----------------------------------------------------
         function sendEmail(event) {
             event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
 
-            // These IDs come from your EmailJS dashboard
-            const serviceID = "YOUR_SERVICE_ID";
-            const templateID = "YOUR_TEMPLATE_ID";
+            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+            const mailtoLink = `mailto:samlawrencedadang@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-            emailjs.sendForm(serviceID, templateID, event.target)
-                .then(() => {
-                    alert("Message sent successfully!");
-                    event.target.reset(); // Clears the form
-                }, (err) => {
-                    alert("Failed to send message. Error: " + JSON.stringify(err));
-                });
+            window.location.href = mailtoLink;
         }
 
     </script>

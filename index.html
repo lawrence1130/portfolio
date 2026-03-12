@@ -23,13 +23,11 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Hardware Acceleration for Smoother Rendering */
         .gpu-accel {
             transform: translateZ(0);
             will-change: transform;
         }
 
-        /* Glassmorphism Essentials */
         .glass-panel {
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: saturate(180%) blur(25px);
@@ -57,9 +55,7 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
-        /* 3D Carousel */
         .perspective-1500 { perspective: 1500px; }
-        .perspective-2000 { perspective: 2000px; }
         .transform-style-3d { transform-style: preserve-3d; }
         
         .carousel-3d-item {
@@ -89,46 +85,20 @@
             .nav-left { left: 0.5rem; }
             .nav-right { right: 0.5rem; }
         }
-
-        /* Museum Gallery Wall - Masonry Grid */
-        .gallery-wrapper {
-            width: 100%;
-            position: relative;
-            padding: 2rem 0;
-        }
-        
-        .museum-block {
-            column-count: 2;
-            column-gap: 16px;
-            padding: 10px;
-        }
-        @media (min-width: 768px) {
-            .museum-block {
-                column-count: 3;
-                column-gap: 24px;
-                padding: 20px;
-            }
-        }
-        @media (min-width: 1024px) {
-            .museum-block {
-                column-count: 4;
-            }
-        }
         
         .museum-frame {
-            break-inside: avoid;
-            margin-bottom: 16px;
             position: relative;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
             z-index: 1;
             padding: 0.5rem;
             border-radius: 1rem;
+            will-change: transform;
             display: inline-block;
             width: 100%;
-            will-change: transform;
+            break-inside: avoid;
         }
         @media (min-width: 768px) {
-            .museum-frame { padding: 0.75rem; border-radius: 1.5rem; margin-bottom: 24px; }
+            .museum-frame { padding: 0.75rem; border-radius: 1.5rem; }
         }
         
         @media (hover: hover) {
@@ -143,63 +113,16 @@
             display: block;
             width: 100%;
             height: auto;
+            object-fit: contain;
             border-radius: 0.5rem;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
             pointer-events: none;
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.5);
         }
         @media (min-width: 768px) {
             .museum-frame img { border-radius: 0.75rem; }
         }
 
-        /* File Drawer Rolodex */
-        #admin { position: relative; height: 300vh; }
-        
-        .sticky-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .drawer-card {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            width: 90%;
-            max-width: 56rem;
-            height: max-content;
-            transform-origin: center center;
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        .admin-window-header {
-            background: rgba(255, 255, 255, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        @media (min-width: 768px) {
-            .admin-window-header { padding: 12px 16px; gap: 8px; }
-        }
-        .window-dot { width: 10px; height: 10px; border-radius: 50%; }
-        @media (min-width: 768px) { .window-dot { width: 12px; height: 12px; } }
-        .dot-red { background: #FF3B30; }
-        .dot-yellow { background: #FFCC00; }
-        .dot-green { background: #34C759; }
-
-        /* Abstract Background */
         .bg-orb {
             position: fixed;
             border-radius: 50%;
@@ -219,7 +142,6 @@
             100% { transform: translate3d(-5%, 10%, 0) scale(1.1); }
         }
 
-        /* Scroll Animations */
         .reveal {
             opacity: 0;
             transform: translateY(30px) translateZ(0);
@@ -256,7 +178,7 @@
                 <a href="#about" class="hover:text-[#007AFF] transition-colors">Profile</a>
                 <a href="#videos" class="hover:text-[#007AFF] transition-colors">Films</a>
                 <a href="#graphics" class="hover:text-[#007AFF] transition-colors">Gallery</a>
-                <!--<a href="#admin" class="hover:text-[#007AFF] transition-colors">Files</a>-->
+                <a href="#admin" class="hover:text-[#007AFF] transition-colors">Files</a>
             </div>
             <a href="mailto:samlawrencedadang@gmail.com" class="glass-btn px-4 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-bold text-[#007AFF]">Let's Talk</a>
         </div>
@@ -316,7 +238,7 @@
         </div>
     </section>
 
-    <!-- 1. Video Reel Carousel (3D Turning Effect + Infinite Loop) -->
+    <!-- 1. Video Reel Carousel -->
     <section id="videos" class="py-20 md:py-24 relative overflow-visible group">
         <div class="max-w-7xl mx-auto px-4 md:px-6 mb-10 md:mb-16 reveal relative z-10 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left">
             <div>
@@ -345,153 +267,167 @@
         </div>
     </section>
 
-    <!-- 2. Graphic Design Museum Gallery Wall -->
+    <!-- 2. Graphic Design Static Gallery -->
     <section id="graphics" class="py-20 md:py-32 relative group">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 mb-6 md:mb-8 reveal flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-10">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 mb-10 md:mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-10 reveal">
             <div>
                 <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
-                    <i data-lucide="palette" class="w-6 h-6 md:w-8 md:h-8 text-[#5856D6]"></i> Museum Gallery
+                    <i data-lucide="palette" class="w-6 h-6 md:w-8 md:h-8 text-[#5856D6]"></i> Curated Gallery
                 </h2>
-                <p class="text-sm md:text-lg text-slate-600">A curated exhibition displaying all visual frame proportions.</p>
+                <p class="text-sm md:text-lg text-slate-600">A selection of my best visual designs and brand identities.</p>
             </div>
-            <a href="images.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#5856D6] flex items-center gap-2">
+            <a href="gallery.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#5856D6] flex items-center gap-2">
                 Open Full Gallery <i data-lucide="external-link" class="w-4 h-4"></i>
             </a>
         </div>
 
-        <div class="gallery-wrapper reveal" id="galleryContainer">
-            <!-- Masonry Grid Block showing all images naturally -->
-            <div class="museum-block max-w-7xl mx-auto">
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/2024.png" alt="Graphic 2024"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/2ndSPTA.png" alt="2nd SPTA"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Castle.png" alt="Castle"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/January.png" alt="January"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Dadang IT5, M2Act1 Emergency Plan.png" alt="Emergency Plan"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Dipolog.png" alt="Dipolog"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/ISSUES.png" alt="Issues"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/JLK.png" alt="JLK"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Katipunan.png" alt="Katipunan"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/kiev and ching.png" alt="Kiev and Ching"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/2025.png" alt="Graphic 2025"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Panguil.png" alt="Panguil"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Untitled-2.png" alt="DonutStore"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Untitled-1.png" alt="AV"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Team Mang.png" alt="Team Mang"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Sam.png" alt="Sam"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/BTRPGC1.png" alt="BTRPGC1"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/DADANG_SAM_LAWRENCE_LOGODESIGN.svg.png" alt="Sam"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/DADANG_SAMLAWRENCE_2D.svg.png" alt="Sam"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/DADANG_SAMLAWRENCE_MASCOT.png" alt="Sam"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Graduation.png" alt="Graduation"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/ICT.png" alt="ICT"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Infographic.png" alt="Infographic"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Typographypng.png" alt="Graduation"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Tim Berners-Lee.png" alt="Tim Berners-Lee"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Tarpulin.jpg" alt="Tim Berners-Lee"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/SPTA.png" alt="Tim Berners-Lee"></div>
-                <div class="museum-frame glass-panel"><img src="Photos/Graphics/Menu.png" alt="Tim Berners-Lee"></div>
+        <div class="max-w-7xl mx-auto px-4 md:px-6 reveal">
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[240px] gap-4 md:gap-6">
+                
+                <!-- Centerpiece / Large Feature -->
+                <div class="museum-frame glass-panel col-span-2 row-span-2 !p-2 md:!p-3 flex items-center justify-center">
+                    <img src="Photos/Graphics/Menu.png" alt="Emergency Plan" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
+                <!-- Standard Square -->
+                <div class="museum-frame glass-panel col-span-1 row-span-1 !p-2 flex items-center justify-center">
+                    <img src="Photos/Graphics/Untitled-2.png" alt="Graphic 2024" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
+                <!-- Tall Feature -->
+                <div class="museum-frame glass-panel col-span-1 row-span-2 !p-2 flex items-center justify-center">
+                    <img src="Photos/Graphics/Tim Berners-Lee.png" alt="Castle" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
+                <!-- Standard Square -->
+                <div class="museum-frame glass-panel col-span-1 row-span-1 !p-2 flex items-center justify-center">
+                    <img src="Photos/Graphics/kiev and ching.png" alt="JLK" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
+                <!-- Wide Feature -->
+                <div class="museum-frame glass-panel col-span-2 row-span-1 !p-2 flex items-center justify-center">
+                    <img src="Photos/Graphics/2025.png" alt="Kiev and Ching" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
+                <!-- Standard Square -->
+                <div class="museum-frame glass-panel col-span-1 row-span-1 !p-2 flex items-center justify-center">
+                    <img src="Photos/Graphics/Team Mang.png" alt="Panguil" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
+                <!-- Standard Square -->
+                <div class="museum-frame glass-panel col-span-1 row-span-1 !p-2 flex items-center justify-center">
+                    <img src="Photos/Graphics/DADANG_SAMLAWRENCE_2D.svg.png" alt="2nd SPTA" loading="lazy" class="w-full h-full object-contain">
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- 3. Administrative Drawer (Rolodex Rotation) 
-    <section id="admin">
-        <div class="sticky-container perspective-2000">
-            <div class="w-full max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left relative z-50">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
-                        <i data-lucide="folder-open" class="w-6 h-6 md:w-10 md:h-10 text-[#FF9500]"></i> File Drawer
-                    </h2>
-                    <p class="text-sm md:text-lg text-slate-600">Scroll to roll through administrative files.</p>
-                </div>
-                <a href="admin.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#FF9500] flex items-center gap-2">
-                    Open Full Drawer <i data-lucide="external-link" class="w-4 h-4"></i>
-                </a>
+    <!-- 3. Administrative iOS Files App Style
+    <section id="admin" class="py-20 md:py-32 relative z-10">
+        <div class="max-w-4xl mx-auto px-4 md:px-6 mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-4 text-center md:text-left reveal">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-2 md:mb-4 flex items-center justify-center md:justify-start gap-2 md:gap-3">
+                    <i data-lucide="folder-open" class="w-6 h-6 md:w-8 md:h-8 text-[#FF9500]"></i> Administrative Files
+                </h2>
+                <p class="text-sm md:text-lg text-slate-600">A collection of workflows, data management, and operational documents.</p>
             </div>
+            <a href="admin.html" class="glass-btn px-4 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-[#FF9500] flex items-center gap-2">
+                Open Full Drawer <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+        </div>
 
-            Rolodex Container 
-            <div id="rolodex" class="relative w-full max-w-4xl h-[350px] md:h-[400px] transform-style-3d px-4 md:px-6">
-                
-                File Card 1
-                <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
-                    <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
-                        <div class="window-dot dot-red"></div>
-                        <div class="window-dot dot-yellow"></div>
-                        <div class="window-dot dot-green"></div>
-                        <span class="text-[10px] md:text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="sheet" class="w-3 h-3 md:w-4 md:h-4 text-[#34C759]"></i> Q3_Financial_Tracker.xlsx
-                        </span>
+        <div class="max-w-4xl mx-auto px-4 md:px-6 reveal">
+            <div class="glass-panel rounded-[2rem] overflow-hidden shadow-sm border border-white/60">
+                <!-- Mac/iOS Style Header 
+                <div class="bg-white/40 border-b border-white/50 px-6 py-4 flex items-center justify-between">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-[#FF3B30]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#FFCC00]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#34C759]"></div>
                     </div>
-                    <div class="p-4 md:p-8 flex flex-col sm:flex-row gap-4 md:gap-6 items-center bg-white/40 rounded-b-[1.5rem] md:rounded-b-[2rem]">
-                        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 glass-panel !bg-[#34C759]/10 border-[#34C759]/20 rounded-xl md:rounded-2xl flex items-center justify-center">
-                            <i data-lucide="bar-chart-2" class="w-8 h-8 md:w-10 md:h-10 text-[#34C759]"></i>
-                        </div>
-                        <div class="text-center sm:text-left">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">Automated Financial Tracker</h3>
-                            <p class="text-slate-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Dynamic VLOOKUPs and automated macros to streamline reporting.</p>
-                            <div class="flex flex-wrap justify-center sm:justify-start gap-2">
-                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Data Entry</span>
-                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Google Sheets</span>
-                            </div>
-                        </div>
+                    <div class="text-xs font-semibold text-slate-500 uppercase tracking-widest">
+                        Operations_Drive
                     </div>
+                    <div class="w-16"></div> <!-- Spacer for flex alignment 
                 </div>
 
-                File Card 2
-                <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
-                    <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
-                        <div class="window-dot dot-red"></div>
-                        <div class="window-dot dot-yellow"></div>
-                        <div class="window-dot dot-green"></div>
-                        <span class="text-[10px] md:text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="file-text" class="w-3 h-3 md:w-4 md:h-4 text-[#007AFF]"></i> Onboarding_SOP.docx
-                        </span>
-                    </div>
-                    <div class="p-4 md:p-8 flex flex-col sm:flex-row gap-4 md:gap-6 items-center bg-white/50 backdrop-blur-md rounded-b-[1.5rem] md:rounded-b-[2rem]">
-                        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 glass-panel !bg-[#007AFF]/10 border-[#007AFF]/20 rounded-xl md:rounded-2xl flex items-center justify-center">
-                            <i data-lucide="clipboard-list" class="w-8 h-8 md:w-10 md:h-10 text-[#007AFF]"></i>
+                <!-- File List -->
+                <div class="p-2 md:p-4 space-y-2">
+                    
+                    <!-- File Item 1 
+                    <a href="admin.html" class="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-[1.5rem] hover:bg-white/50 transition-colors group cursor-pointer border border-transparent hover:border-white/60">
+                        <div class="w-12 h-12 rounded-xl bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="sheet" class="w-6 h-6"></i>
                         </div>
-                        <div class="text-center sm:text-left">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">Standard Operating Procedures</h3>
-                            <p class="text-slate-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Drafted, formatted, and standardized the client onboarding manual.</p>
-                            <div class="flex flex-wrap justify-center sm:justify-start gap-2">
-                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Documentation</span>
-                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Formatting</span>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-slate-900 group-hover:text-[#007AFF] transition-colors text-lg">Q3_Financial_Tracker.xlsx</h4>
+                            <p class="text-sm text-slate-500 mt-1">Dynamic VLOOKUPs and automated macros to streamline reporting.</p>
+                            <div class="flex gap-2 mt-3 sm:hidden">
+                                <span class="px-2 py-1 bg-white/60 rounded text-[10px] font-bold text-slate-600">Data Entry</span>
+                                <span class="px-2 py-1 bg-white/60 rounded text-[10px] font-bold text-slate-600">Google Sheets</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                File Card 3
-                <div class="drawer-card glass-panel rounded-[1.5rem] md:rounded-[2rem]">
-                    <div class="admin-window-header rounded-t-[1.5rem] md:rounded-t-[2rem]">
-                        <div class="window-dot dot-red"></div>
-                        <div class="window-dot dot-yellow"></div>
-                        <div class="window-dot dot-green"></div>
-                        <span class="text-[10px] md:text-xs text-slate-500 font-medium ml-2 uppercase tracking-wider flex items-center gap-2">
-                            <i data-lucide="presentation" class="w-3 h-3 md:w-4 md:h-4 text-[#FF9500]"></i> Pitch_Deck_Master.pptx
-                        </span>
-                    </div>
-                    <div class="p-4 md:p-8 flex flex-col sm:flex-row gap-4 md:gap-6 items-center bg-white/60 backdrop-blur-lg rounded-b-[1.5rem] md:rounded-b-[2rem]">
-                        <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 glass-panel !bg-[#FF9500]/10 border-[#FF9500]/20 rounded-xl md:rounded-2xl flex items-center justify-center">
-                            <i data-lucide="layout-template" class="w-8 h-8 md:w-10 md:h-10 text-[#FF9500]"></i>
+                        <div class="hidden sm:flex gap-2 shrink-0">
+                            <span class="px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-slate-600 border border-white/40">Data Entry</span>
+                            <span class="px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-slate-600 border border-white/40">Google Sheets</span>
                         </div>
-                        <div class="text-center sm:text-left">
-                            <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-2">Executive Presentations</h3>
-                            <p class="text-slate-600 mb-3 md:mb-4 text-xs md:text-sm leading-relaxed">Synthesized complex datasets into visually appealing slide decks.</p>
-                            <div class="flex flex-wrap justify-center sm:justify-start gap-2">
-                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Google Slides</span>
-                                <span class="px-2 py-1 md:px-3 md:py-1.5 glass-btn rounded-full text-[9px] md:text-[10px] font-bold text-slate-700">Visual Layout</span>
+                        <div class="hidden sm:flex shrink-0 w-8 justify-end">
+                            <i data-lucide="chevron-right" class="text-slate-400 group-hover:text-[#007AFF] transition-colors"></i>
+                        </div>
+                    </a>
+
+                    <!-- File Item 2 
+                    <a href="admin.html" class="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-[1.5rem] hover:bg-white/50 transition-colors group cursor-pointer border border-transparent hover:border-white/60">
+                        <div class="w-12 h-12 rounded-xl bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="file-text" class="w-6 h-6"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-slate-900 group-hover:text-[#007AFF] transition-colors text-lg">Onboarding_SOP.docx</h4>
+                            <p class="text-sm text-slate-500 mt-1">Drafted, formatted, and standardized the client onboarding manual.</p>
+                            <div class="flex gap-2 mt-3 sm:hidden">
+                                <span class="px-2 py-1 bg-white/60 rounded text-[10px] font-bold text-slate-600">Documentation</span>
+                                <span class="px-2 py-1 bg-white/60 rounded text-[10px] font-bold text-slate-600">Formatting</span>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <div class="hidden sm:flex gap-2 shrink-0">
+                            <span class="px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-slate-600 border border-white/40">Documentation</span>
+                            <span class="px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-slate-600 border border-white/40">Formatting</span>
+                        </div>
+                        <div class="hidden sm:flex shrink-0 w-8 justify-end">
+                            <i data-lucide="chevron-right" class="text-slate-400 group-hover:text-[#007AFF] transition-colors"></i>
+                        </div>
+                    </a>
 
+                    <!-- File Item 3 
+                    <a href="admin.html" class="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-[1.5rem] hover:bg-white/50 transition-colors group cursor-pointer border border-transparent hover:border-white/60">
+                        <div class="w-12 h-12 rounded-xl bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <i data-lucide="presentation" class="w-6 h-6"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-slate-900 group-hover:text-[#007AFF] transition-colors text-lg">Pitch_Deck_Master.pptx</h4>
+                            <p class="text-sm text-slate-500 mt-1">Synthesized complex datasets into visually appealing slide decks.</p>
+                            <div class="flex gap-2 mt-3 sm:hidden">
+                                <span class="px-2 py-1 bg-white/60 rounded text-[10px] font-bold text-slate-600">Google Slides</span>
+                                <span class="px-2 py-1 bg-white/60 rounded text-[10px] font-bold text-slate-600">Visual Layout</span>
+                            </div>
+                        </div>
+                        <div class="hidden sm:flex gap-2 shrink-0">
+                            <span class="px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-slate-600 border border-white/40">Google Slides</span>
+                            <span class="px-3 py-1 bg-white/60 rounded-full text-xs font-bold text-slate-600 border border-white/40">Visual Layout</span>
+                        </div>
+                        <div class="hidden sm:flex shrink-0 w-8 justify-end">
+                            <i data-lucide="chevron-right" class="text-slate-400 group-hover:text-[#007AFF] transition-colors"></i>
+                        </div>
+                    </a>
+
+                </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
-    <!-- Footer / Contact --> 
+    <!-- Footer / Contact -->
     <section id="contact" class="py-20 md:py-32 px-4 md:px-6 border-t border-white/30 relative z-10 text-center">
         <div class="max-w-3xl mx-auto reveal glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
             <div class="w-16 h-16 md:w-20 md:h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-6 md:mb-8">
@@ -501,19 +437,6 @@
             <p class="text-base md:text-lg text-slate-600 mb-8 md:mb-10">Have a project in mind or want to collaborate? Send me a message directly.</p>
             <p class="text-base md:text-lg text-slate-600 mb-8 md:mb-10">you can email me at <a href="mailto:samlawrencedadang@gmail.com" class="text-[#007AFF] hover:underline">samlawrencedadang@gmail.com</a>.</p>
 
-            <!--<form onsubmit="sendEmail(event)" class="max-w-xl mx-auto text-left flex flex-col gap-4 mb-10">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <input type="text" name="name" placeholder="Your Name" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
-                    <input type="email" name="email" placeholder="Your Email" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
-                </div>
-                <input type="text" name="subject" placeholder="Subject" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500">
-                <textarea name="message" rows="4" placeholder="Your Message" required class="w-full px-5 py-4 bg-white/40 border border-white/50 rounded-2xl outline-none focus:border-[#007AFF] focus:bg-white/60 transition-all text-slate-800 placeholder-slate-500 resize-none"></textarea>
-
-                <button type="submit" class="w-full py-4 bg-[#007AFF] text-white rounded-2xl font-bold text-lg hover:bg-[#005bb5] transition-all shadow-xl hover:-translate-y-1 mt-2">
-                    Send Message
-                </button>
-            </form>-->
-            
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">Socials</h2>
             <div class="flex items-center justify-center gap-4 border-t border-white/30 pt-8">
                 <a href="https://www.linkedin.com/in/dadang-sam-lawrence-a-undefined-2908363a8/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
@@ -663,54 +586,7 @@
         }
 
         // ----------------------------------------------------
-        // 3. Admin Drawer Rolodex Scroll Logic
-        // ----------------------------------------------------
-        const adminSection = document.getElementById('admin');
-        const rolodex = document.getElementById('rolodex');
-        const cards = document.querySelectorAll('.drawer-card');
-        const anglePerCard = 35; 
-
-        const updateDrawerRolodex = () => {
-            const isMobile = window.innerWidth < 768;
-            const radius = isMobile ? 200 : 350;
-
-            cards.forEach((card, i) => {
-                card.style.transform = `rotateX(${-i * anglePerCard}deg) translateZ(${radius}px)`;
-            });
-
-            const rect = adminSection.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            
-            let progress = 0;
-            if (rect.top <= 0) {
-                progress = Math.max(0, Math.min(1, -rect.top / (rect.height - windowHeight)));
-            }
-
-            const maxRotation = (cards.length - 1) * anglePerCard;
-            const currentRotation = progress * maxRotation;
-            
-            rolodex.style.transform = `rotateX(${currentRotation}deg)`;
-
-            cards.forEach((card, i) => {
-                const cardAngle = (-i * anglePerCard) + currentRotation;
-                const opacity = 1 - Math.min(1, Math.abs(cardAngle) / 60);
-                card.style.opacity = Math.max(0, opacity);
-                
-                // Allow interaction only with the front-facing card
-                if (Math.abs(cardAngle) < 10) {
-                    card.style.pointerEvents = 'auto';
-                } else {
-                    card.style.pointerEvents = 'none';
-                }
-            });
-        };
-
-        window.addEventListener('scroll', updateDrawerRolodex);
-        window.addEventListener('resize', updateDrawerRolodex);
-        updateDrawerRolodex(); // Initial call
-        
-        // ----------------------------------------------------
-        // 4. Email Form Handling
+        // 3. Email Form Handling
         // ----------------------------------------------------
         function sendEmail(event) {
             event.preventDefault();

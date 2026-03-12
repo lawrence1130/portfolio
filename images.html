@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Graphic Archives | iOS Glass Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ios-bg: #f2f2f7;
+            --ios-blue: #007AFF;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Plus Jakarta Sans", sans-serif; 
+            background-color: var(--ios-bg); 
+            color: #1c1c1e;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: saturate(180%) blur(25px);
+            -webkit-backdrop-filter: saturate(180%) blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            will-change: transform, opacity;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: float 25s infinite ease-in-out alternate;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(88, 86, 214, 0.25); animation-delay: 0s; }
+        .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(0, 122, 255, 0.25); animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(-5%, 10%, 0) scale(1.1); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) translateZ(0);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) translateZ(0);
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-lg md:text-xl tracking-tight flex items-center gap-2 md:gap-3">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center rounded-xl shadow-lg text-sm md:text-base">P.</div>
+                <span>Portfolio</span>
+            </a>
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+                <a href="index.html#graphics" class="hover:text-[#007AFF] transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main
+                </a>
+            </div>
+            <a href="mailto:samlawrencedadang@gmail.com" class="glass-btn px-4 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-bold text-[#007AFF]">Let's Talk</a>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto reveal">
+            <a href="index.html#graphics" class="inline-flex items-center gap-2 text-slate-500 hover:text-[#007AFF] transition-colors mb-8 font-medium md:hidden">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+            </a>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-4 text-[#5856D6]">
+                Graphic Archives.
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mb-12">
+                A comprehensive collection of graphic design assets, brand identities, event posters, and visual layouts. Click on any image to view it in full size.
+            </p>
+
+            <!-- Image Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="imageGrid">
+                <!-- Image Cards Injected Here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <section class="py-16 px-4 md:px-6 border-t border-white/30 relative z-10 text-center mt-12">
+        <div class="max-w-3xl mx-auto reveal glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
+            <div class="w-16 h-16 md:w-20 md:h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-6 md:mb-8">
+                <i data-lucide="mail" class="w-8 h-8 md:w-10 md:h-10 text-[#007AFF]"></i>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 tracking-tight">Ready to collaborate?</h2>
+            <p class="text-base text-slate-600 mb-8">Send an inquiry to discuss your next project.</p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="mailto:samlawrencedadang@gmail.com?subject=Portfolio%20Inquiry" class="glass-btn gap-3 px-8 md:px-10 py-4 bg-[#007AFF] text-white rounded-full font-bold text-lg hover:bg-[#005bb5]">
+                    Send an Email
+                </a>
+                
+                <div class="flex items-center justify-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+                    <a href="https://www.linkedin.com/in/dadang-sam-lawrence-a-undefined-2908363a8/" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.facebook.com/samlawrence.dadang.5" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.instagram.com/luwyyng/?hl=en" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <p class="mt-8 text-xs md:text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
+        </div>
+    </section>
+
+    <!-- Image Modal / Lightbox -->
+    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-4 md:p-8 opacity-0 transition-opacity duration-300">
+        <button onclick="closeModal()" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-50 p-2 glass-btn rounded-full border-none !bg-white/10 hover:!bg-white/20">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <img id="modalImage" src="" class="max-w-full max-h-[85vh] md:max-h-[90vh] object-contain rounded-lg shadow-2xl transform scale-95 transition-transform duration-300">
+        <h3 id="modalTitle" class="text-white mt-4 text-xl font-bold tracking-tight text-center"></h3>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        const graphicData = [
+            { title: "2024 Retrospective", type: "Graphic", img: "Photos/Graphics/2024.png", desc: "A visual summary emphasizing typography and structured layouts." },
+            { title: "2nd SPTA Assembly", type: "Graphic", img: "Photos/Graphics/2ndSPTA.png", desc: "Promotional graphics tailored for an institutional assembly." },
+            { title: "Castle Ambience", type: "Graphic", img: "Photos/Graphics/Castle.png", desc: "An atmospheric digital composite focusing on lighting and depth." },
+            { title: "January Theme", type: "Graphic", img: "Photos/Graphics/January.png", desc: "A monthly thematic layout for print and digital distribution." },
+            { title: "Emergency Action Plan", type: "Graphic", img: "Photos/Graphics/Dadang IT5, M2Act1 Emergency Plan.png", desc: "Clear, accessible, and highly structured instructional design." },
+            { title: "Explore Dipolog", type: "Graphic", img: "Photos/Graphics/Dipolog.png", desc: "Travel and tourism promotional graphic highlighting local culture." },
+            { title: "Current Issues", type: "Graphic", img: "Photos/Graphics/ISSUES.png", desc: "Typographic exploration created for editorial and print formats." },
+            { title: "JLK Identity", type: "Graphic", img: "Photos/Graphics/JLK.png", desc: "Corporate brand identity and logo deployment exploration." },
+            { title: "Katipunan Heritage", type: "Graphic", img: "Photos/Graphics/Katipunan.png", desc: "Design piece capturing local history and regional pride." },
+            { title: "Kiev & Ching", type: "Graphic", img: "Photos/Graphics/kiev and ching.png", desc: "Elegant and minimalist design executed for a special event." },
+            { title: "2025 Vision", type: "Graphic", img: "Photos/Graphics/2025.png", desc: "Forward-looking graphic piece utilizing modern design trends." },
+            { title: "Panguil Beauty", type: "Graphic", img: "Photos/Graphics/Panguil.png", desc: "Scenic promotional design prioritizing high-impact imagery." },
+            { title: "Donut Store", type: "Graphic", img: "Photos/Graphics/Untitled-2.png", desc: "Vibrant and appetizing promotional design for a donut store." },
+            { title: "AV Design", type: "Graphic", img: "Photos/Graphics/Untitled-1.png", desc: "Experimental visual composition." },
+            { title: "Team Mang", type: "Graphic", img: "Photos/Graphics/Team Mang.png", desc: "A collaborative design layout featuring team members." },
+            { title: "Sam Profile", type: "Graphic", img: "Photos/Graphics/Sam.png", desc: "Stylized personal profile graphic." },
+            { title: "BTRPGC1", type: "Graphic", img: "Photos/Graphics/BTRPGC1.png", desc: "High-energy design tailored for a specific campaign." },
+            { title: "Logo Design", type: "Graphic", img: "Photos/Graphics/DADANG_SAM_LAWRENCE_LOGODESIGN.svg.png", desc: "Vector-based custom logo design highlighting brand aesthetics." },
+            { title: "2D Design", type: "Graphic", img: "Photos/Graphics/DADANG_SAMLAWRENCE_2D.svg.png", desc: "Flat 2D illustration work with clean lines." },
+            { title: "Mascot", type: "Graphic", img: "Photos/Graphics/DADANG_SAMLAWRENCE_MASCOT.png", desc: "Custom character design for brand representation." },
+            { title: "Graduation Tribute", type: "Graphic", img: "Photos/Graphics/Graduation.png", desc: "Commemorative design for academic milestones." },
+            { title: "ICT Poster", type: "Graphic", img: "Photos/Graphics/ICT.png", desc: "Informative design focused on information technology." },
+            { title: "Custom Infographic", type: "Graphic", img: "Photos/Graphics/Infographic.png", desc: "Visual data representation for easy consumption." },
+            { title: "Typography Study", type: "Graphic", img: "Photos/Graphics/Typographypng.png", desc: "Creative layout prioritizing font interplay and hierarchy." },
+            { title: "Tim Berners-Lee", type: "Graphic", img: "Photos/Graphics/Tim Berners-Lee.png", desc: "Informational poster design dedicated to a historical figure." },
+            { title: "Tarpulin Design", type: "Graphic", img: "Photos/Graphics/Tarpulin.jpg", desc: "High-resolution design scaled for large physical print." },
+            { title: "SPTA Program", type: "Graphic", img: "Photos/Graphics/SPTA.png", desc: "Structured design for the SPTA community program." },
+            { title: "Menu Layout", type: "Graphic", img: "Photos/Graphics/Menu.png", desc: "Clean and appetizing layout for a food service menu." }
+        ];
+
+        const grid = document.getElementById('imageGrid');
+
+        graphicData.forEach((data) => {
+            const card = document.createElement('div');
+            card.className = "image-card glass-panel rounded-[2rem] p-4 flex flex-col group reveal cursor-pointer";
+            // Set onclick event to open the modal
+            card.setAttribute('onclick', `openModal('${data.img.replace(/'/g, "\\'")}', '${data.title.replace(/'/g, "\\'")}')`);
+            
+            card.innerHTML = `
+                <div class="w-full relative rounded-[1.5rem] overflow-hidden bg-white/40 aspect-square md:aspect-[4/3] flex items-center justify-center p-2">
+                    <img src="${data.img}" alt="${data.title}" class="w-full h-full object-contain transition-transform duration-500 drop-shadow-sm" loading="lazy">
+                    <div class="absolute top-4 left-4 glass-panel !bg-white/70 text-slate-800 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">${data.type}</div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 rounded-[1.5rem] flex items-center justify-center">
+                        <div class="bg-white/90 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-75 group-hover:scale-100 shadow-lg">
+                            <i data-lucide="zoom-in" class="w-5 h-5 text-slate-800"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 md:p-6">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-slate-900 group-hover:text-[#5856D6] transition-colors">${data.title}</h3>
+                    <p class="text-sm md:text-base text-slate-600">${data.desc}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Re-initialize Lucide to catch the new icons inside the grid
+        lucide.createIcons();
+
+        // Apply reveal to dynamically added elements
+        document.querySelectorAll('.image-card.reveal').forEach(el => revealObserver.observe(el));
+
+        // Lightbox Modal Logic
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+
+        function openModal(imgSrc, title) {
+            modalImg.src = imgSrc;
+            modalTitle.textContent = title;
+            modal.classList.remove('hidden');
+            
+            // Trigger reflow for animation
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            modalImg.classList.remove('scale-95');
+            modalImg.classList.add('scale-100');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalImg.classList.remove('scale-100');
+            modalImg.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modalImg.src = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal || e.target.tagName.toLowerCase() !== 'img') {
+                closeModal();
+            }
+        });
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

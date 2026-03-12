@@ -2,217 +2,214 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Portfolio | Post-Production</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Video Archives | iOS Glass Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FAFAFA;
-            color: #171717;
-        }
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        :root {
+            --ios-bg: #f2f2f7;
+            --ios-blue: #007AFF;
         }
 
-        .fade-in-up {
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Plus Jakarta Sans", sans-serif; 
+            background-color: var(--ios-bg); 
+            color: #1c1c1e;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .nav-glass {
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: saturate(180%) blur(25px);
+            -webkit-backdrop-filter: saturate(180%) blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            will-change: transform, opacity;
+        }
+
+        .glass-btn {
             background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .clean-shadow {
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+        .glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
-        ::selection {
-            background: #00750a;
-            color: white;
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: float 25s infinite ease-in-out alternate;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(0, 122, 255, 0.35); animation-delay: 0s; }
+        .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: rgba(88, 86, 214, 0.25); animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(-5%, 10%, 0) scale(1.1); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) translateZ(0);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) translateZ(0);
+        }
+
+        /* Mobile Scroll Fix for Iframes */
+        .iframe-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            cursor: pointer;
+            background: transparent;
+        }
+        .video-card:hover .iframe-overlay, 
+        .video-card.active .iframe-overlay {
+            display: none;
         }
     </style>
 </head>
-<body class="antialiased overflow-x-hidden">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 nav-glass transition-all duration-300">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="font-heading font-bold text-xl tracking-tight text-neutral-900 flex items-center gap-2">
-                <div class="w-8 h-8 bg-[#00750a] text-white flex items-center justify-center rounded-lg text-sm">P.</div>
-                Portfolio.
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+            <a href="index.html" class="font-bold text-lg md:text-xl tracking-tight flex items-center gap-2 md:gap-3">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center rounded-xl shadow-lg text-sm md:text-base">P.</div>
+                <span>Portfolio</span>
             </a>
-            <div class="flex items-center gap-6">
-                <a href="index.html" class="text-sm font-medium text-slate-500 hover:text-[#00750a] transition-colors flex items-center gap-2">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Work
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+                <a href="index.html#videos" class="hover:text-[#007AFF] transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Main
                 </a>
             </div>
+            <a href="mailto:samlawrencedadang@gmail.com" class="glass-btn px-4 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-bold text-[#007AFF]">Let's Talk</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="pt-40 pb-10 px-6 max-w-4xl mx-auto text-center">
-        <div class="fade-in-up inline-flex items-center gap-2 px-4 py-1.5 bg-[#00750a]/10 border border-[#00750a]/20 rounded-full text-[#00750a] text-xs font-bold tracking-widest uppercase mb-6">
-            Video Editing • Post-Production
-        </div>
-        
-        <h1 class="fade-in-up delay-100 font-heading text-5xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
-            Visual Archive.
-        </h1>
-        
-        <p class="fade-in-up delay-200 text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            A compiled directory of post-production projects, encompassing short films, promotional edits, and motion graphics.
-        </p>
-    </section>
+    <section class="pt-32 pb-16 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto reveal">
+            <a href="index.html#videos" class="inline-flex items-center gap-2 text-slate-500 hover:text-[#007AFF] transition-colors mb-8 font-medium md:hidden">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+            </a>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter mb-4">
+                Video Archives.
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mb-12">
+                A complete collection of motion pictures, vlogs, and commercial edits.
+            </p>
 
-    <!-- Filter System -->
-    <section class="px-6 max-w-6xl mx-auto pb-10 fade-in-up delay-300">
-        <div class="flex flex-wrap justify-center gap-2 p-1 bg-white border border-slate-200 rounded-full w-fit mx-auto clean-shadow">
-            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all bg-[#00750a] text-white" onclick="filterVideos('all')">All</button>
-            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-slate-100" onclick="filterVideos('narrative')">Narrative</button>
-            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-slate-100" onclick="filterVideos('promo')">Promos</button>
-            <button class="filter-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-slate-600 hover:bg-slate-100" onclick="filterVideos('vlog')">Vlogs</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="videoGrid">
+                <!-- Video Cards Injected Here -->
+            </div>
         </div>
     </section>
 
-    <!-- Video Grid -->
-    <section class="px-6 max-w-6xl mx-auto pb-24 fade-in-up delay-300">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="video-grid">
+    <!-- Footer / Contact -->
+    <section class="py-16 px-4 md:px-6 border-t border-white/30 relative z-10 text-center mt-12">
+        <div class="max-w-3xl mx-auto reveal glass-panel p-6 md:p-12 rounded-[2rem] md:rounded-[3rem] shadow-2xl">
+            <div class="w-16 h-16 md:w-20 md:h-20 mx-auto glass-btn rounded-full flex items-center justify-center mb-6 md:mb-8">
+                <i data-lucide="mail" class="w-8 h-8 md:w-10 md:h-10 text-[#007AFF]"></i>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 tracking-tight">Ready to collaborate?</h2>
+            <p class="text-base text-slate-600 mb-8">Send an inquiry to discuss your next project.</p>
             
-            <!-- Video Item 1 -->
-            <div class="video-item narrative bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
-                <div class="aspect-video w-full relative bg-slate-900">
-                    <iframe src="https://drive.google.com/file/d/16W_v6QchTQEBUPSU5PLP0-vyF3L1MVMl/preview" title="Midnight Express" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
-                </div>
-                <div class="p-8">
-                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Narrative Film</span>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Behind the Lens (Full Film)</h3>
-                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Complete sequence demonstrating pacing, audio leveling, and a stylized teal/orange color grade.</p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">DaVinci Resolve</span>
-                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">Ableton Live</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Video Item 2 -->
-            <div class="video-item promo bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
-                <div class="aspect-video w-full relative bg-slate-900">
-                    <iframe src="https://www.youtube.com/embed/XIjJvw1e5GQ" title="Trailer Teaser" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
-                </div>
-                <div class="p-8">
-                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Promo Teaser</span>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Pre-Wedding Trailer</h3>
-                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">A fast-paced teaser designed for social media. Emphasis on transition effects and beat-syncing.</p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">Premiere Pro</span>
-                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">After Effects</span>
-                    </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="mailto:samlawrencedadang@gmail.com?subject=Portfolio%20Inquiry" class="glass-btn gap-3 px-8 md:px-10 py-4 bg-[#007AFF] text-white rounded-full font-bold text-lg hover:bg-[#005bb5]">
+                    Send an Email
+                </a>
+                
+                <div class="flex items-center justify-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+                    <a href="https://www.linkedin.com/in/dadang-sam-lawrence-a-undefined-2908363a8/" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.facebook.com/samlawrence.dadang.5" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.instagram.com/luwyyng/?hl=en" target="_blank" rel="noopener noreferrer" class="w-[52px] h-[52px] glass-btn rounded-full flex items-center justify-center text-[#007AFF]">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
                 </div>
             </div>
 
-            
-
-             <!-- Video Item 3 -->
-            <div class="video-item vlog bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
-                <div class="aspect-video w-full relative bg-slate-900">
-                    <iframe src="https://drive.google.com/file/d/1EgAvlB6Ke4qKkcDqJWzkMSU3lyIp4uF2/preview" title="Travel Vlog" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
-                </div>
-                <div class="p-8">
-                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Travel Vlog</span>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Cinematic Travel Edit</h3>
-                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Dynamic travel sequence showcasing speed-ramping techniques, stabilized footage, and environmental sound design.</p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">DaVinci Resolve</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Video Item 4 -->
-            <div class="video-item vlog bg-white rounded-3xl overflow-hidden border border-slate-100 clean-shadow flex flex-col transition-all duration-300">
-                <div class="aspect-video w-full relative bg-slate-900">
-                    <iframe src="https://www.youtube.com/embed/l_E4lYtVce4" title="Travel Vlog" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
-                </div>
-                <div class="p-8">
-                    <span class="text-[10px] uppercase tracking-widest text-[#00750a] font-bold mb-2 block">Narrative Edit</span>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Action Sequence Block</h3>
-                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">Exercise in multi-cam editing and maintaining spatial continuity during complex action sequences.</p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-slate-50 border border-slate-200 text-slate-600 text-xs font-semibold rounded-lg">Premiere Pro</span>
-                    </div>
-                </div>
-            </div>
-
+            <p class="mt-8 text-xs md:text-sm text-slate-500 font-medium">© <span id="year"></span> Designed & Built natively.</p>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="bg-slate-50 text-slate-500 py-12 px-6 text-sm border-t border-slate-200">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="font-medium">© <span id="year"></span> Your Name. All rights reserved.</p>
-            <div class="flex gap-6 font-semibold">
-                <a href="#" class="hover:text-[#00750a] transition-colors">LinkedIn</a>
-                <a href="#" class="hover:text-[#00750a] transition-colors">GitHub</a>
-                <a href="#" class="hover:text-[#00750a] transition-colors">Twitter</a>
-            </div>
-        </div>
-    </footer>
 
     <script>
         lucide.createIcons();
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        function filterVideos(category) {
-            const items = document.querySelectorAll('.video-item');
-            const buttons = document.querySelectorAll('.filter-btn');
-            
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-[#00750a]', 'text-white');
-                btn.classList.add('text-slate-600', 'bg-transparent');
-                
-                if (btn.getAttribute('onclick').includes(category)) {
-                    btn.classList.add('bg-[#00750a]', 'text-white');
-                    btn.classList.remove('text-slate-600', 'bg-transparent');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
             });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-            items.forEach(item => {
-                if (category === 'all' || item.classList.contains(category)) {
-                    item.style.display = 'flex';
-                    setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0)'; }, 50);
-                } else {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(20px)';
-                    setTimeout(() => { item.style.display = 'none'; }, 300);
-                    
-                    // Stop playing media when hidden
-                    const video = item.querySelector('video');
-                    const iframe = item.querySelector('iframe');
-                    if (video) video.pause();
-                    if (iframe) iframe.src = iframe.src; 
-                }
-            });
-        }
+        const videoData = [
+            { title: "Behind the Lens", type: "Trailer", video: "https://www.youtube.com/embed/LoQxHktbHmg?enablejsapi=1", desc: "A Story of friendships and expression of creativity." },
+            { title: "Kiev and Ching", type: "Teaser", video: "https://www.youtube.com/embed/XIjJvw1e5GQ?enablejsapi=1", desc: "Showcasing the love and joy of a couple's journey." },
+            { title: "Communal Ranch", type: "Vlog", video: "https://www.youtube.com/embed/DhnkGd_rWFI?enablejsapi=1", desc: "A travel vlog showcasing the beauty of a rural setting." },
+            { title: "Eleventh Hour", type: "Short Film", video: "https://www.youtube.com/embed/l_E4lYtVce4?enablejsapi=1", desc: "A short film exploring themes of time and memory." },
+            { title: "Team Mang", type: "Vlog", video: "https://www.youtube.com/embed/4AyiRwuoqhQ?enablejsapi=1", desc: "Event highlight and showcasing a team's collaborative efforts." },
+            { title: "Pre-Wedding", type: "Short Film", video: "https://www.youtube.com/embed/umVHQzLy2aM?enablejsapi=1", desc: "A short film capturing the emotions and moments of the couple's journey." }
+        ];
+
+        const grid = document.getElementById('videoGrid');
+
+        videoData.forEach((data) => {
+            const card = document.createElement('div');
+            card.className = "video-card glass-panel rounded-[2rem] p-4 flex flex-col group reveal";
+            
+            card.innerHTML = `
+                <div class="aspect-video w-full relative rounded-[1.5rem] overflow-hidden bg-black shadow-inner pointer-events-auto">
+                    <iframe src="${data.video}" title="${data.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="w-full h-full absolute top-0 left-0 outline-none"></iframe>
+                    <div class="iframe-overlay" onclick="this.style.display='none'; this.parentElement.parentElement.classList.add('active');"></div>
+                    <div class="absolute top-4 left-4 glass-panel !bg-black/40 text-white px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md pointer-events-none">${data.type}</div>
+                </div>
+                <div class="p-4 md:p-6 pointer-events-none">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 text-slate-900">${data.title}</h3>
+                    <p class="text-sm md:text-base text-slate-600">${data.desc}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Apply reveal to dynamically added elements
+        document.querySelectorAll('.video-card.reveal').forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>
